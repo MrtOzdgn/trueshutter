@@ -1,0 +1,104 @@
+---
+import { getCollection } from 'astro:content';
+import '../../styles/global.css';
+
+const cameras = await getCollection('cameras');
+
+const byMake = new Map<string, typeof cameras>();
+for (const camera of cameras) {
+  const list = byMake.get(camera.data.make) ?? [];
+  list.push(camera);
+  byMake.set(camera.data.make, list);
+}
+const makes = [...byMake.keys()].sort();
+
+const statusIcon = { confirmed: '✓', expected: '◐', unsupported: '✗' } as const;
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content="Every camera model TrueShutter can read a shutter count from, and which ones are confirmed vs. still being validated." />
+		<title>Supported Cameras — TrueShutter</title>
+	</head>
+	<body>
+		<main>
+			<header class="site-header">
+				<p class="breadcrumb"><a href={import.meta.env.BASE_URL}>TrueShutter</a> / Cameras</p>
+				<h1>Supported Cameras</h1>
+				<p>
+					✓ confirmed = tested against a real sample file and cross-checked with exiftool. ◐ expected = same
+					documented mechanism as a confirmed sibling model, not personally tested yet. ✗ not supported = the
+					camera doesn't store shutter count in the file, or we haven't found the right offset yet.
+				</p>
+			</header>
+
+			{makes.map((make) => (
+				<section class="make-group">
+					<h2>{make}</h2>
+					<ul class="camera-list">
+						{byMake
+							.get(make)!
+							.sort((a, b) => a.data.model.localeCompare(b.data.model))
+							.map((camera) => (
+								<li>
+									<a href={`${import.meta.env.BASE_URL}cameras/${camera.id}`}>
+										<span class={`status-icon status-icon--${camera.data.status}`}>{statusIcon[camera.data.status]}</span>
+										{camera.data.model}
+									</a>
+								</li>
+							))}
+					</ul>
+				</section>
+			))}
+
+			<footer class="site-footer">
+				<p><a href={import.meta.env.BASE_URL}>← Back to the tool</a></p>
+			</footer>
+		</main>
+	</body>
+</html>
+
+<style>
+	.make-group {
+		margin-bottom: 2rem;
+	}
+	.make-group h2 {
+		font-size: 1.1rem;
+		border-bottom: 1px solid var(--border);
+		padding-bottom: 0.5rem;
+	}
+	.camera-list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+		gap: 0.5rem;
+	}
+	.camera-list a {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		color: var(--text);
+		text-decoration: none;
+		padding: 0.5rem 0.75rem;
+		border-radius: 8px;
+		border: 1px solid var(--border);
+	}
+	.camera-list a:hover {
+		border-color: var(--accent);
+	}
+	.status-icon--confirmed {
+		color: var(--ok);
+	}
+	.status-icon--expected {
+		color: var(--text-dim);
+	}
+	.status-icon--unsupported {
+		color: var(--error);
+	}
+</style>
