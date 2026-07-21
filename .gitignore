@@ -25,3 +25,6 @@ pnpm-debug.log*
 
 # large RAW test fixtures fetched from public sample repos, not meant to live in git
 test-samples/
+
+# machine-specific local dev server wrapper (hardcoded nvm path)
+dev-server.sh

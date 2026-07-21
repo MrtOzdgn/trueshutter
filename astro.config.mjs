@@ -5,5 +5,7 @@ import preact from '@astrojs/preact';
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://mrtozdgn.github.io',
+  base: '/trueshutter/',
   integrations: [preact()]
 });
