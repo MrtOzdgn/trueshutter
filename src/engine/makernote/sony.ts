@@ -21,8 +21,10 @@ const OFFSET_RULES: OffsetRule[] = [
   // share the same MakerNote layout — all individually validated against real sample files.
   // A7R shares this exact offset with its already-validated sibling A7/A7 II, individually
   // validated against a real sample file too (see sony.test.ts).
+  // NEX-5N individually validated against a real sample file too — same offset as its
+  // NEX-7/6/5R/3N siblings above.
   {
-    matcher: /^ILCE-7(R|M2)?$|^ILCE-7S$|^ILCE-6000$|^NEX-(7|6|5R|3N)$|^SLT-A(77V|58|99V)$|^ILCA-77M2$/,
+    matcher: /^ILCE-7(R|M2)?$|^ILCE-7S$|^ILCE-6000$|^NEX-(7|6|5R|3N|5N)$|^SLT-A(77V|58|99V)$|^ILCA-77M2$/,
     offset: 0x0032,
     confirmed: true,
   },
@@ -42,9 +44,9 @@ const OFFSET_RULES: OffsetRule[] = [
     offset: 0x003a,
     confirmed: true,
   },
-  // Newest generation — A6700 and A7CR validated against real files; A7 V and A1 II share
-  // the same documented offset but haven't been individually tested yet.
-  { matcher: /^ILCE-7M5$|^ILCE-1M2$|^ILCE-6700$|^ILCE-7CR$/, offset: 0x000a, confirmed: true },
+  // Newest generation — A6700, A7CR, and A7C II validated against real files; A7 V and A1 II
+  // share the same documented offset but haven't been individually tested yet.
+  { matcher: /^ILCE-7M5$|^ILCE-1M2$|^ILCE-6700$|^ILCE-7CR$|^ILCE-7CM2$/, offset: 0x000a, confirmed: true },
 ];
 
 export function readSonyShutterCount(

@@ -77,3 +77,14 @@ describe('readShutterCount - Canon CR2 (1D-series pro bodies)', () => {
     });
   }
 });
+
+describe('readShutterCount - Canon CR3 (original EOS R, correctly unsupported)', () => {
+  // A camera-scavenger lead for the original EOS R turned out to have no exiftool
+  // ShutterCount ground truth to validate against at all, unlike R5/R6/R6 II — this guards
+  // against a regression that would make the engine silently report a wrong count for it.
+  it('reports canon_eosr.cr3 as unsupported rather than a wrong count', async () => {
+    const file = toFile('test-samples/canon_eosr.cr3', 'canon_eosr.cr3');
+    const result = await readShutterCount(file);
+    expect(result.status).toBe('unsupported');
+  });
+});

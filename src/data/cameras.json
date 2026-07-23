@@ -1588,5 +1588,55 @@
     "mechanism": "Not present in file metadata",
     "ratedShutterLife": null,
     "notes": "Same as the D1 — predates the Type 3 MakerNote format ShutterCount depends on."
+  },
+  {
+    "id": "sony-a7c-ii",
+    "make": "Sony",
+    "model": "A7C II (ILCE-7CM2)",
+    "format": "ARW",
+    "status": "confirmed",
+    "mechanism": "MakerNote tag 0x9050, decrypted, offset 0x000A",
+    "ratedShutterLife": null,
+    "notes": null
+  },
+  {
+    "id": "sony-nex-5n",
+    "make": "Sony",
+    "model": "NEX-5N",
+    "format": "ARW",
+    "status": "confirmed",
+    "mechanism": "MakerNote tag 0x9050, decrypted, offset 0x0032",
+    "ratedShutterLife": null,
+    "notes": null
+  },
+  {
+    "id": "sony-nex-c3",
+    "make": "Sony",
+    "model": "NEX-C3",
+    "format": "ARW",
+    "status": "unsupported",
+    "mechanism": "Not present in file metadata",
+    "ratedShutterLife": null,
+    "notes": "This body doesn't use the encrypted tag 0x9050 mechanism at all — exiftool reads its shutter count from a different Sony MakerNote tag we haven't reverse-engineered yet."
+  },
+  {
+    "id": "sony-zv-e1",
+    "make": "Sony",
+    "model": "ZV-E1",
+    "format": "ARW",
+    "status": "unsupported",
+    "mechanism": "Not present in file metadata",
+    "ratedShutterLife": null,
+    "notes": "exiftool has no ShutterCount definition for this body on our sample file."
+  },
+  {
+    "id": "canon-eos-r",
+    "make": "Canon",
+    "model": "EOS R",
+    "format": "CR3",
+    "status": "unsupported",
+    "mechanism": "Not present in file metadata",
+    "ratedShutterLife": null,
+    "notes": "exiftool has no ShutterCount definition for this body on our sample file."
   }
 ]

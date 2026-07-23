@@ -51,6 +51,12 @@ const FIXTURES: Array<{ file: string; expectedCount: number; expectedModel: stri
   { file: 'sony_a7r.arw', expectedCount: 7648, expectedModel: 'ILCE-7R' },
   { file: 'sony_a7sii.arw', expectedCount: 666, expectedModel: 'ILCE-7SM2' },
   { file: 'sony_a6500.arw', expectedCount: 3233, expectedModel: 'ILCE-6500' },
+  // Second batch of scavenger leads. A7C II matched its assumed 0x000A offset; NEX-5N matched
+  // its assumed 0x0032 offset. NEX-C3 and ZV-E1 do NOT carry MakerNote tag 0x9050 at all (see
+  // the unsupported describe block below) despite exiftool reporting NEX-C3's count via some
+  // other tag — not the same mechanism, not implemented here.
+  { file: 'sony_a7c2.arw', expectedCount: 31, expectedModel: 'ILCE-7CM2' },
+  { file: 'sony_nex5n.arw', expectedCount: 3262, expectedModel: 'NEX-5N' },
 ];
 
 function toFile(path: string, name: string): File {
@@ -69,6 +75,21 @@ describe('readShutterCount - Sony ARW', () => {
         expect(result.shutterCount).toBe(fixture.expectedCount);
         expect(result.model.trim()).toBe(fixture.expectedModel);
       }
+    });
+  }
+});
+
+describe('readShutterCount - Sony ARW (no MakerNote tag 0x9050, correctly unsupported)', () => {
+  // Two more camera-scavenger leads assumed these shared a same-generation offset. Neither
+  // actually carries the encrypted tag 0x9050 at all — NEX-C3 predates it (exiftool reads its
+  // count from a different, unimplemented tag) and ZV-E1 has no ShutterCount in exiftool
+  // either. These guard against a regression that would make either silently misreport.
+  const UNSUPPORTED_FIXTURES = ['sony_nexc3.arw', 'sony_zve1.arw'];
+
+  for (const file of UNSUPPORTED_FIXTURES) {
+    it(`reports ${file} as unsupported rather than a wrong count`, async () => {
+      const result = await readShutterCount(toFile(`test-samples/${file}`, file));
+      expect(result.status).toBe('unsupported');
     });
   }
 });
