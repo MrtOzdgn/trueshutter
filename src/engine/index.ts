@@ -9,6 +9,7 @@ import {
   TAG_MODEL,
   TAG_EXIF_IFD_POINTER,
   TAG_MAKER_NOTE,
+  TAG_DATE_TIME_ORIGINAL,
 } from './binary';
 import { readNikonShutterCount } from './makernote/nikon';
 import { readSonyShutterCount } from './makernote/sony';
@@ -63,7 +64,7 @@ function readFromCanonCr3(view: DataView, format: RawFormat): ShutterCountResult
     if (!result) {
       return { status: 'unsupported', make: null, model: null, format, reason: 'Could not parse this CR3 file structure.' };
     }
-    const { make, model, shutterCount } = result;
+    const { make, model, shutterCount, dateTaken } = result;
     if (shutterCount === null) {
       return {
         status: 'unsupported',
@@ -73,7 +74,7 @@ function readFromCanonCr3(view: DataView, format: RawFormat): ShutterCountResult
         reason: `Shutter count extraction for "${model.trim() || 'this camera'}" is not supported yet.`,
       };
     }
-    return { status: 'ok', make, model, format, shutterCount, source: 'Canon CTMD track, MakerNote tag 0x000D' };
+    return { status: 'ok', make, model, format, shutterCount, source: 'Canon CTMD track, MakerNote tag 0x000D', dateTaken };
   } catch (err) {
     return { status: 'error', message: (err as Error).message };
   }
@@ -102,6 +103,9 @@ function readFromTiff(view: DataView, base: number, format: RawFormat): ShutterC
     const exifIfdOffset = base + readEntryAsUint32(view, exifIfdEntry, base, header.littleEndian);
     const exifIfd = readIfd(view, base, exifIfdOffset, header.littleEndian);
 
+    const dateEntry = exifIfd.entries.get(TAG_DATE_TIME_ORIGINAL);
+    const dateTaken = dateEntry ? readEntryAsAscii(view, dateEntry, base) : null;
+
     const makerNoteEntry = exifIfd.entries.get(TAG_MAKER_NOTE);
     if (!makerNoteEntry) {
       return {
@@ -125,7 +129,7 @@ function readFromTiff(view: DataView, base: number, format: RawFormat): ShutterC
           reason: 'Could not locate a ShutterCount tag in this Nikon MakerNote.',
         };
       }
-      return { status: 'ok', make, model, format, shutterCount: count, source: 'Nikon MakerNote tag 0x00A7' };
+      return { status: 'ok', make, model, format, shutterCount: count, source: 'Nikon MakerNote tag 0x00A7', dateTaken };
     }
 
     if (/sony/i.test(make)) {
@@ -139,7 +143,7 @@ function readFromTiff(view: DataView, base: number, format: RawFormat): ShutterC
           reason: `Shutter count offset for "${model.trim()}" is not yet in our supported-model table.`,
         };
       }
-      return { status: 'ok', make, model, format, shutterCount: count, source: 'Sony MakerNote tag 0x9050 (deciphered)' };
+      return { status: 'ok', make, model, format, shutterCount: count, source: 'Sony MakerNote tag 0x9050 (deciphered)', dateTaken };
     }
 
     if (/fujifilm/i.test(make)) {
@@ -153,7 +157,7 @@ function readFromTiff(view: DataView, base: number, format: RawFormat): ShutterC
           reason: 'Could not locate an ImageCount tag in this Fujifilm MakerNote.',
         };
       }
-      return { status: 'ok', make, model, format, shutterCount: count, source: 'Fujifilm MakerNote tag 0x1438' };
+      return { status: 'ok', make, model, format, shutterCount: count, source: 'Fujifilm MakerNote tag 0x1438', dateTaken };
     }
 
     return {

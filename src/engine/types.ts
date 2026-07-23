@@ -8,6 +8,8 @@ export interface ShutterCountOk {
   shutterCount: number;
   /** Human-readable description of where the value came from, for transparency. */
   source: string;
+  /** Raw EXIF DateTimeOriginal, format "YYYY:MM:DD HH:MM:SS", or null if not present. */
+  dateTaken: string | null;
 }
 
 export interface ShutterCountUnsupported {

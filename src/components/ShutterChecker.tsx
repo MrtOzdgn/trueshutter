@@ -81,17 +81,45 @@ export default function ShutterChecker() {
   );
 }
 
+/**
+ * Camera model strings often already name the brand (e.g. "Canon EOS R6", "NIKON D40" next to
+ * make "NIKON CORPORATION") — comparing first words avoids both "Canon Canon EOS R6" and the
+ * less obvious "NIKON CORPORATION NIKON D40".
+ */
+function formatCameraName(make: string | null, model: string | null): string {
+  const trimmedMake = make?.trim() ?? '';
+  const trimmedModel = model?.trim() ?? '';
+  const makeFirstWord = trimmedMake.split(/\s+/)[0]?.toLowerCase();
+  const modelFirstWord = trimmedModel.split(/\s+/)[0]?.toLowerCase();
+  if (makeFirstWord && makeFirstWord === modelFirstWord) return trimmedModel;
+  return [trimmedMake, trimmedModel].filter(Boolean).join(' ');
+}
+
+function formatDateTaken(raw: string | null): string | null {
+  if (!raw) return null;
+  const match = raw.match(/^(\d{4}):(\d{2}):(\d{2}) (\d{2}):(\d{2}):(\d{2})$/);
+  if (!match) return raw;
+  const [, year, month, day, hour, minute] = match;
+  const date = new Date(Number(year), Number(month) - 1, Number(day), Number(hour), Number(minute));
+  return date.toLocaleString(undefined, {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+}
+
 function ResultRow({ fileName, result }: { fileName: string; result: ShutterCountResult }) {
   if (result.status === 'ok') {
+    const dateTaken = formatDateTaken(result.dateTaken);
     return (
       <div class="result result--ok">
         <div class="result__count">{result.shutterCount.toLocaleString()}</div>
         <div class="result__meta">
           <div class="result__file">{fileName}</div>
-          <div class="result__camera">
-            {result.make} {result.model.trim()}
-          </div>
-          <div class="result__source">{result.source}</div>
+          <div class="result__camera">{formatCameraName(result.make, result.model)}</div>
+          {dateTaken && <div class="result__date">{dateTaken}</div>}
         </div>
       </div>
     );
@@ -103,11 +131,7 @@ function ResultRow({ fileName, result }: { fileName: string; result: ShutterCoun
         <div class="result__count">—</div>
         <div class="result__meta">
           <div class="result__file">{fileName}</div>
-          {(result.make || result.model) && (
-            <div class="result__camera">
-              {result.make} {result.model?.trim()}
-            </div>
-          )}
+          {(result.make || result.model) && <div class="result__camera">{formatCameraName(result.make, result.model)}</div>}
           <div class="result__source">{result.reason}</div>
         </div>
       </div>

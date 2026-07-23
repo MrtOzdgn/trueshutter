@@ -1,5 +1,13 @@
 import { walkBoxes, findBox, findUuidBox, findTrackSample, CANON_UUID, type Box } from '../isobmff';
-import { readTiffHeader, readIfd, readEntryAsAscii, entryValueOffset, TAG_MAKE, TAG_MODEL } from '../binary';
+import {
+  readTiffHeader,
+  readIfd,
+  readEntryAsAscii,
+  entryValueOffset,
+  TAG_MAKE,
+  TAG_MODEL,
+  TAG_DATE_TIME_ORIGINAL,
+} from '../binary';
 
 /**
  * Canon CR3 is ISO-BMFF. Static camera metadata (Make/Model) lives in a proprietary `uuid`
@@ -37,6 +45,7 @@ interface CanonResult {
   make: string;
   model: string;
   shutterCount: number | null;
+  dateTaken: string | null;
 }
 
 export function readCanonCr3(view: DataView): CanonResult | null {
@@ -47,17 +56,19 @@ export function readCanonCr3(view: DataView): CanonResult | null {
   const moovChildren = walkBoxes(view, moov.payloadStart, moov.end);
 
   const canonBox = findUuidBox(view, moovChildren, CANON_UUID);
-  const { make, model } = canonBox ? readMakeModel(view, canonBox) : { make: '', model: '' };
+  const { make, model, dateTaken } = canonBox
+    ? readMakeModelDate(view, canonBox)
+    : { make: '', model: '', dateTaken: null };
 
   const shutterCount = readShutterCountFromCtmd(view, moovChildren, model);
 
-  return { make, model, shutterCount };
+  return { make, model, shutterCount, dateTaken };
 }
 
-function readMakeModel(view: DataView, canonBox: Box): { make: string; model: string } {
+function readMakeModelDate(view: DataView, canonBox: Box): { make: string; model: string; dateTaken: string | null } {
   const canonChildren = walkBoxes(view, canonBox.payloadStart + 16, canonBox.end);
   const cmt1 = findBox(canonChildren, 'CMT1');
-  if (!cmt1) return { make: '', model: '' };
+  if (!cmt1) return { make: '', model: '', dateTaken: null };
 
   const header = readTiffHeader(view, cmt1.payloadStart);
   const ifd0 = readIfd(view, cmt1.payloadStart, header.ifd0Offset, header.littleEndian);
@@ -66,7 +77,18 @@ function readMakeModel(view: DataView, canonBox: Box): { make: string; model: st
   const modelEntry = ifd0.entries.get(TAG_MODEL);
   const make = makeEntry ? readEntryAsAscii(view, makeEntry, cmt1.payloadStart) : '';
   const model = modelEntry ? readEntryAsAscii(view, modelEntry, cmt1.payloadStart) : '';
-  return { make, model };
+
+  // CMT2 is the ExifIFD-equivalent embedded TIFF block, holding standard tags like capture date.
+  let dateTaken: string | null = null;
+  const cmt2 = findBox(canonChildren, 'CMT2');
+  if (cmt2) {
+    const exifHeader = readTiffHeader(view, cmt2.payloadStart);
+    const exifIfd = readIfd(view, cmt2.payloadStart, exifHeader.ifd0Offset, exifHeader.littleEndian);
+    const dateEntry = exifIfd.entries.get(TAG_DATE_TIME_ORIGINAL);
+    if (dateEntry) dateTaken = readEntryAsAscii(view, dateEntry, cmt2.payloadStart);
+  }
+
+  return { make, model, dateTaken };
 }
 
 function readShutterCountFromCtmd(view: DataView, moovChildren: Box[], model: string): number | null {

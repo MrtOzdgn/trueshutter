@@ -123,3 +123,5 @@ export const TAG_MAKE = 0x010f;
 export const TAG_MODEL = 0x0110;
 export const TAG_EXIF_IFD_POINTER = 0x8769;
 export const TAG_MAKER_NOTE = 0x927c;
+/** Standard ExifIFD tag for capture date/time, stored as ASCII "YYYY:MM:DD HH:MM:SS". */
+export const TAG_DATE_TIME_ORIGINAL = 0x9003;

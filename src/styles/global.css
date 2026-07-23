@@ -185,7 +185,8 @@ main {
   font-weight: 600;
 }
 
-.result__source {
+.result__source,
+.result__date {
   font-size: 0.8rem;
   color: var(--text-dim);
 }
