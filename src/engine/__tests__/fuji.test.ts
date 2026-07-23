@@ -19,6 +19,11 @@ const FIXTURES: Array<{ file: string; expectedCount: number; expectedModel: stri
   { file: 'fuji_gfx100s.raf', expectedCount: 73, expectedModel: 'GFX100S' },
   { file: 'fuji_gfx100ii.raf', expectedCount: 592, expectedModel: 'GFX100 II' },
   { file: 'fuji_gfx50sii.raf', expectedCount: 37, expectedModel: 'GFX50S II' },
+  // Camera-scavenger leads, independently validated against raw.pixls.us samples — 3/3
+  // matched their assumed same-family offset immediately.
+  { file: 'fuji_gfx50s.raf', expectedCount: 395, expectedModel: 'GFX 50S' },
+  { file: 'fuji_gfx50r.raf', expectedCount: 316, expectedModel: 'GFX 50R' },
+  { file: 'fuji_gfx100.raf', expectedCount: 858, expectedModel: 'GFX 100' },
 ];
 
 function toFile(path: string, name: string): File {

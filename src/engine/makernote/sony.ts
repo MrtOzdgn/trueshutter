@@ -17,10 +17,12 @@ interface OffsetRule {
 }
 
 const OFFSET_RULES: OffsetRule[] = [
-  // A7 / A7 II / A7S / A6000 generation, plus the contemporary NEX/SLT/ILCA-77M2 bodies that
+  // A7 / A7 II / A6000 generation, plus the contemporary NEX/SLT/ILCA-77M2 bodies that
   // share the same MakerNote layout — all individually validated against real sample files.
+  // A7R shares this exact offset with its already-validated sibling A7/A7 II, individually
+  // validated against a real sample file too (see sony.test.ts).
   {
-    matcher: /^ILCE-7(M2)?$|^ILCE-7S$|^ILCE-6000$|^NEX-(7|6|5R|3N)$|^SLT-A(77V|58|99V)$|^ILCA-77M2$/,
+    matcher: /^ILCE-7(R|M2)?$|^ILCE-7S$|^ILCE-6000$|^NEX-(7|6|5R|3N)$|^SLT-A(77V|58|99V)$|^ILCA-77M2$/,
     offset: 0x0032,
     confirmed: true,
   },
@@ -28,10 +30,15 @@ const OFFSET_RULES: OffsetRule[] = [
   // against a real sample file (not inferred from documentation). Offset 0x3a turns out to be
   // stable across a very wide span of Sony's post-2015 MakerNote layouts, regardless of the
   // deciphered block's total size (944 bytes for some models, 256 for others) — confirmed
-  // empirically across enough models now that this isn't a coincidence.
+  // empirically across enough models now that this isn't a coincidence. A6500 and A7S II both
+  // individually validated here too — note A7S II landed in THIS generation despite otherwise
+  // looking like an "A7S" sibling: the naive assumption that it shared A7S's 0x0032 offset was
+  // tested and found wrong (returned 0 instead of the real count), caught by cross-checking
+  // against exiftool before shipping — the actual offset was found by scanning the deciphered
+  // block for the known-correct value and landed on 0x3a, same as everything else in this group.
   {
     matcher:
-      /^ILCE-7RM2$|^ILCE-7RM3$|^ILCE-7RM4A?$|^ILCE-7RM5$|^ILCE-7M3$|^ILCE-7M4$|^ILCE-7C$|^ILCE-7SM3$|^ILCE-9M?2?$|^ILCE-1$|^ILCE-6[1346]00$|^ZV-E10$/,
+      /^ILCE-7RM2$|^ILCE-7RM3$|^ILCE-7RM4A?$|^ILCE-7RM5$|^ILCE-7M3$|^ILCE-7M4$|^ILCE-7C$|^ILCE-7SM2$|^ILCE-7SM3$|^ILCE-9M?2?$|^ILCE-1$|^ILCE-6[13456]00$|^ZV-E10$/,
     offset: 0x003a,
     confirmed: true,
   },

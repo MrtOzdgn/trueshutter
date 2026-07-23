@@ -43,6 +43,14 @@ const FIXTURES: Array<{ file: string; expectedCount: number; expectedModel: stri
   { file: 'sony_a7c.arw', expectedCount: 19, expectedModel: 'ILCE-7C' },
   { file: 'sony_a7rm5.arw', expectedCount: 446, expectedModel: 'ILCE-7RM5' },
   { file: 'sony_a7sm3.arw', expectedCount: 5460, expectedModel: 'ILCE-7SM3' },
+  // Camera-scavenger leads, independently validated against raw.pixls.us samples. A7R matched
+  // its assumed 0x0032 offset immediately; A7S II did NOT match the same assumption (naively
+  // grouped with A7S) — cross-checking against exiftool caught it returning 0 instead of the
+  // real count, and scanning the deciphered block for the known-correct value found it actually
+  // belongs in the 0x003A generation instead. A6500 matched its assumed 0x003A offset.
+  { file: 'sony_a7r.arw', expectedCount: 7648, expectedModel: 'ILCE-7R' },
+  { file: 'sony_a7sii.arw', expectedCount: 666, expectedModel: 'ILCE-7SM2' },
+  { file: 'sony_a6500.arw', expectedCount: 3233, expectedModel: 'ILCE-6500' },
 ];
 
 function toFile(path: string, name: string): File {

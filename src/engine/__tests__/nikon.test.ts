@@ -65,3 +65,19 @@ describe('readShutterCount - Nikon NEF', () => {
     });
   }
 });
+
+describe('readShutterCount - Nikon NEF (pre-Type-3 MakerNote, correctly unsupported)', () => {
+  // A camera-scavenger lead assumed these shared the D2/D3 series' Type 3 MakerNote family —
+  // checking against a real sample file found they predate it (MakerNoteVersion 1.00, not
+  // 2.xx) and have no ShutterCount tag at all, same as exiftool's own reading. These guard
+  // against a regression that would make the engine silently report a wrong number instead of
+  // correctly saying "unsupported".
+  const UNSUPPORTED_FIXTURES = ['nikon_d1.nef', 'nikon_d1h.nef', 'nikon_d1x.nef'];
+
+  for (const file of UNSUPPORTED_FIXTURES) {
+    it(`reports ${file} as unsupported rather than a wrong count`, async () => {
+      const result = await readShutterCount(toFile(`test-samples/${file}`, file));
+      expect(result.status).toBe('unsupported');
+    });
+  }
+});

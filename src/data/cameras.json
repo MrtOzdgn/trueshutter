@@ -907,7 +907,7 @@
     "status": "unsupported",
     "mechanism": "Not yet implemented",
     "ratedShutterLife": null,
-    "notes": "This camera generation doesn't use the encrypted tag 0x9050 mechanism at all \u2014 shutter count lives in a different, unencrypted binary sub-block we haven't implemented yet."
+    "notes": "This camera generation doesn't use the encrypted tag 0x9050 mechanism at all — shutter count lives in a different, unencrypted binary sub-block we haven't implemented yet."
   },
   {
     "id": "sony-dslr-a580",
@@ -917,7 +917,7 @@
     "status": "unsupported",
     "mechanism": "Not yet implemented",
     "ratedShutterLife": null,
-    "notes": "Same as the A330 \u2014 older unencrypted mechanism, not yet implemented."
+    "notes": "Same as the A330 — older unencrypted mechanism, not yet implemented."
   },
   {
     "id": "sony-dslr-a850",
@@ -927,7 +927,7 @@
     "status": "unsupported",
     "mechanism": "Not yet implemented",
     "ratedShutterLife": null,
-    "notes": "Same as the A330 \u2014 older unencrypted mechanism, not yet implemented."
+    "notes": "Same as the A330 — older unencrypted mechanism, not yet implemented."
   },
   {
     "id": "sony-dslr-a900",
@@ -937,7 +937,7 @@
     "status": "unsupported",
     "mechanism": "Not yet implemented",
     "ratedShutterLife": null,
-    "notes": "Same as the A330 \u2014 older unencrypted mechanism, not yet implemented."
+    "notes": "Same as the A330 — older unencrypted mechanism, not yet implemented."
   },
   {
     "id": "sony-slt-a35",
@@ -947,7 +947,7 @@
     "status": "unsupported",
     "mechanism": "Not yet implemented",
     "ratedShutterLife": null,
-    "notes": "Same as the A330 \u2014 older unencrypted mechanism, not yet implemented."
+    "notes": "Same as the A330 — older unencrypted mechanism, not yet implemented."
   },
   {
     "id": "canon-eos-r5",
@@ -987,7 +987,7 @@
     "status": "unsupported",
     "mechanism": "Not yet implemented",
     "ratedShutterLife": 500000,
-    "notes": "The CTMD structure differs enough from the R5/R6 that we haven't located the right offset yet \u2014 needs its own sample-file investigation."
+    "notes": "The CTMD structure differs enough from the R5/R6 that we haven't located the right offset yet — needs its own sample-file investigation."
   },
   {
     "id": "canon-eos-r8",
@@ -1017,7 +1017,7 @@
     "status": "unsupported",
     "mechanism": "Not yet implemented",
     "ratedShutterLife": null,
-    "notes": "Same story as the R3 \u2014 not yet investigated."
+    "notes": "Same story as the R3 — not yet investigated."
   },
   {
     "id": "canon-eos-r10",
@@ -1027,7 +1027,7 @@
     "status": "unsupported",
     "mechanism": "Not yet implemented",
     "ratedShutterLife": null,
-    "notes": "Same story as the R3 \u2014 not yet investigated."
+    "notes": "Same story as the R3 — not yet investigated."
   },
   {
     "id": "canon-eos-5d-mark-iv",
@@ -1037,7 +1037,7 @@
     "status": "unsupported",
     "mechanism": "Not stored in-file",
     "ratedShutterLife": 150000,
-    "notes": "Canon's consumer/prosumer CR2 bodies don't write shutter count into the file at all \u2014 it's only readable live over USB (PTP) directly from the camera, which is out of scope for a file-based tool."
+    "notes": "Canon's consumer/prosumer CR2 bodies don't write shutter count into the file at all — it's only readable live over USB (PTP) directly from the camera, which is out of scope for a file-based tool."
   },
   {
     "id": "canon-eos-80d",
@@ -1047,7 +1047,7 @@
     "status": "unsupported",
     "mechanism": "Not stored in-file",
     "ratedShutterLife": 100000,
-    "notes": "Same as the 5D Mark IV \u2014 not stored in CR2 files, USB-only."
+    "notes": "Same as the 5D Mark IV — not stored in CR2 files, USB-only."
   },
   {
     "id": "canon-eos-rebel-t7i",
@@ -1057,7 +1057,7 @@
     "status": "unsupported",
     "mechanism": "Not stored in-file",
     "ratedShutterLife": null,
-    "notes": "Same as the 5D Mark IV \u2014 not stored in CR2 files, USB-only."
+    "notes": "Same as the 5D Mark IV — not stored in CR2 files, USB-only."
   },
   {
     "id": "fujifilm-x-t3",
@@ -1257,7 +1257,7 @@
     "status": "unsupported",
     "mechanism": "Not present in file metadata",
     "ratedShutterLife": null,
-    "notes": "Checked directly: this body's RAF files don't carry an image counter tag at all \u2014 the tag was only introduced starting around the X-T1's firmware v3."
+    "notes": "Checked directly: this body's RAF files don't carry an image counter tag at all — the tag was only introduced starting around the X-T1's firmware v3."
   },
   {
     "id": "fujifilm-x-e1",
@@ -1267,7 +1267,7 @@
     "status": "unsupported",
     "mechanism": "Not present in file metadata",
     "ratedShutterLife": null,
-    "notes": "Same as the X-Pro1 \u2014 predates the firmware that added this tag."
+    "notes": "Same as the X-Pro1 — predates the firmware that added this tag."
   },
   {
     "id": "fujifilm-x-t10",
@@ -1277,7 +1277,7 @@
     "status": "unsupported",
     "mechanism": "Not present in file metadata",
     "ratedShutterLife": null,
-    "notes": "Same as the X-Pro1 \u2014 predates the firmware that added this tag."
+    "notes": "Same as the X-Pro1 — predates the firmware that added this tag."
   },
   {
     "id": "fujifilm-x100s",
@@ -1287,7 +1287,7 @@
     "status": "unsupported",
     "mechanism": "Not present in file metadata",
     "ratedShutterLife": null,
-    "notes": "Same as the X-Pro1 \u2014 predates the firmware that added this tag."
+    "notes": "Same as the X-Pro1 — predates the firmware that added this tag."
   },
   {
     "id": "sony-a7c",
@@ -1347,7 +1347,7 @@
     "status": "unsupported",
     "mechanism": "Not yet implemented",
     "ratedShutterLife": 500000,
-    "notes": "exiftool has no ShutterCount definition for this body on our sample file, so there's no public ground truth to validate an offset against \u2014 we won't copy a competitor's unverified number."
+    "notes": "exiftool has no ShutterCount definition for this body on our sample file, so there's no public ground truth to validate an offset against — we won't copy a competitor's unverified number."
   },
   {
     "id": "canon-eos-r50-v",
@@ -1357,7 +1357,7 @@
     "status": "unsupported",
     "mechanism": "Not yet implemented",
     "ratedShutterLife": null,
-    "notes": "Same as the R5 Mark II \u2014 no ground truth available to validate against yet."
+    "notes": "Same as the R5 Mark II — no ground truth available to validate against yet."
   },
   {
     "id": "canon-eos-r1",
@@ -1397,7 +1397,7 @@
     "status": "unsupported",
     "mechanism": "Not yet implemented",
     "ratedShutterLife": null,
-    "notes": "This generation uses a different FileInfo layout than the Mark II \u2014 the known offset doesn't apply, and we haven't found the right one yet."
+    "notes": "This generation uses a different FileInfo layout than the Mark II — the known offset doesn't apply, and we haven't found the right one yet."
   },
   {
     "id": "canon-eos-1ds-mark-iii",
@@ -1407,7 +1407,7 @@
     "status": "unsupported",
     "mechanism": "Not yet implemented",
     "ratedShutterLife": null,
-    "notes": "Same as the 1D Mark III \u2014 different FileInfo layout, not yet solved."
+    "notes": "Same as the 1D Mark III — different FileInfo layout, not yet solved."
   },
   {
     "id": "canon-eos-1d-mark-iv",
@@ -1418,5 +1418,175 @@
     "mechanism": "Not yet implemented",
     "ratedShutterLife": null,
     "notes": "exiftool has no ShutterCount definition for this body on our sample file."
+  },
+  {
+    "id": "nikon-d2hs",
+    "make": "Nikon",
+    "model": "D2Hs",
+    "format": "NEF",
+    "status": "expected",
+    "mechanism": "MakerNote tag 0x00A7 (ShutterCount)",
+    "ratedShutterLife": null,
+    "notes": null
+  },
+  {
+    "id": "nikon-d4s",
+    "make": "Nikon",
+    "model": "D4S",
+    "format": "NEF",
+    "status": "expected",
+    "mechanism": "MakerNote tag 0x00A7 (ShutterCount)",
+    "ratedShutterLife": null,
+    "notes": null
+  },
+  {
+    "id": "nikon-d810a",
+    "make": "Nikon",
+    "model": "D810A",
+    "format": "NEF",
+    "status": "expected",
+    "mechanism": "MakerNote tag 0x00A7 (ShutterCount)",
+    "ratedShutterLife": null,
+    "notes": null
+  },
+  {
+    "id": "nikon-d5500",
+    "make": "Nikon",
+    "model": "D5500",
+    "format": "NEF",
+    "status": "expected",
+    "mechanism": "MakerNote tag 0x00A7 (ShutterCount)",
+    "ratedShutterLife": null,
+    "notes": null
+  },
+  {
+    "id": "nikon-d5600",
+    "make": "Nikon",
+    "model": "D5600",
+    "format": "NEF",
+    "status": "expected",
+    "mechanism": "MakerNote tag 0x00A7 (ShutterCount)",
+    "ratedShutterLife": null,
+    "notes": null
+  },
+  {
+    "id": "nikon-df",
+    "make": "Nikon",
+    "model": "Df",
+    "format": "NEF",
+    "status": "expected",
+    "mechanism": "MakerNote tag 0x00A7 (ShutterCount)",
+    "ratedShutterLife": null,
+    "notes": null
+  },
+  {
+    "id": "sony-a7r",
+    "make": "Sony",
+    "model": "A7R (ILCE-7R)",
+    "format": "ARW",
+    "status": "confirmed",
+    "mechanism": "MakerNote tag 0x9050, decrypted, offset 0x0032",
+    "ratedShutterLife": null,
+    "notes": null
+  },
+  {
+    "id": "sony-a7s-ii",
+    "make": "Sony",
+    "model": "A7S II (ILCE-7SM2)",
+    "format": "ARW",
+    "status": "confirmed",
+    "mechanism": "MakerNote tag 0x9050, decrypted, offset 0x003A",
+    "ratedShutterLife": null,
+    "notes": null
+  },
+  {
+    "id": "sony-a6500",
+    "make": "Sony",
+    "model": "A6500 (ILCE-6500)",
+    "format": "ARW",
+    "status": "confirmed",
+    "mechanism": "MakerNote tag 0x9050, decrypted, offset 0x003A",
+    "ratedShutterLife": null,
+    "notes": null
+  },
+  {
+    "id": "fujifilm-gfx50s",
+    "make": "Fujifilm",
+    "model": "GFX 50S",
+    "format": "RAF",
+    "status": "confirmed",
+    "mechanism": "MakerNote tag 0x1438 (ImageCount, high bit masked)",
+    "ratedShutterLife": null,
+    "notes": null
+  },
+  {
+    "id": "fujifilm-gfx50r",
+    "make": "Fujifilm",
+    "model": "GFX 50R",
+    "format": "RAF",
+    "status": "confirmed",
+    "mechanism": "MakerNote tag 0x1438 (ImageCount, high bit masked)",
+    "ratedShutterLife": null,
+    "notes": null
+  },
+  {
+    "id": "fujifilm-gfx100",
+    "make": "Fujifilm",
+    "model": "GFX 100",
+    "format": "RAF",
+    "status": "confirmed",
+    "mechanism": "MakerNote tag 0x1438 (ImageCount, high bit masked)",
+    "ratedShutterLife": null,
+    "notes": null
+  },
+  {
+    "id": "fujifilm-gfx100-ir",
+    "make": "Fujifilm",
+    "model": "GFX100 IR",
+    "format": "RAF",
+    "status": "expected",
+    "mechanism": "MakerNote tag 0x1438 (ImageCount, high bit masked)",
+    "ratedShutterLife": null,
+    "notes": null
+  },
+  {
+    "id": "fujifilm-gfx100s-ii",
+    "make": "Fujifilm",
+    "model": "GFX100S II",
+    "format": "RAF",
+    "status": "expected",
+    "mechanism": "MakerNote tag 0x1438 (ImageCount, high bit masked)",
+    "ratedShutterLife": null,
+    "notes": null
+  },
+  {
+    "id": "nikon-d1",
+    "make": "Nikon",
+    "model": "D1",
+    "format": "NEF",
+    "status": "unsupported",
+    "mechanism": "Not present in file metadata",
+    "ratedShutterLife": null,
+    "notes": "This body predates the Type 3 MakerNote format (MakerNoteVersion 1.00, not 2.xx) that ShutterCount depends on — exiftool has no ShutterCount definition for it either."
+  },
+  {
+    "id": "nikon-d1h",
+    "make": "Nikon",
+    "model": "D1H",
+    "format": "NEF",
+    "status": "unsupported",
+    "mechanism": "Not present in file metadata",
+    "ratedShutterLife": null,
+    "notes": "Same as the D1 — predates the Type 3 MakerNote format ShutterCount depends on."
+  },
+  {
+    "id": "nikon-d1x",
+    "make": "Nikon",
+    "model": "D1X",
+    "format": "NEF",
+    "status": "unsupported",
+    "mechanism": "Not present in file metadata",
+    "ratedShutterLife": null,
+    "notes": "Same as the D1 — predates the Type 3 MakerNote format ShutterCount depends on."
   }
 ]
