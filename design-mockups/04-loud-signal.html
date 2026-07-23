@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>TrueShutter — Loud Signal concept</title>
+<style>
+  :root {
+    --bg: #fff6e4;
+    --ink: #14120f;
+    --blue: #2547d6;
+    --pink: #d81b74;
+    --yellow: #ffd23f;
+    --mint: #17b57a;
+    --card: #ffffff;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  main {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 0 4.5rem;
+  }
+
+  /* ---------- header band ---------- */
+  .hero-band {
+    background: var(--blue);
+    border-bottom: 4px solid var(--ink);
+    padding: 3rem 1.5rem 2.75rem;
+    text-align: center;
+    color: #fff;
+  }
+  .site-header h1 {
+    font-size: 3.4rem;
+    margin: 0 0 .9rem;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .site-header h1 .mark {
+    background: var(--yellow);
+    color: var(--ink);
+    padding: 0 .3rem;
+    display: inline-block;
+    transform: rotate(-2deg);
+    border: 3px solid var(--ink);
+    border-radius: 6px;
+  }
+  .site-header .tagline {
+    max-width: 32rem;
+    margin: 0 auto 1.4rem;
+    font-size: 1.12rem;
+    font-weight: 600;
+  }
+  .trust-stickers {
+    display: flex;
+    justify-content: center;
+    gap: .75rem;
+    flex-wrap: wrap;
+  }
+  .sticker {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    background: var(--card);
+    color: var(--ink);
+    border: 3px solid var(--ink);
+    border-radius: 999px;
+    padding: .4rem .9rem;
+    font-weight: 800;
+    font-size: .82rem;
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+  .trust-stickers .sticker:nth-child(1) { transform: rotate(-3deg); }
+  .trust-stickers .sticker:nth-child(2) { transform: rotate(2deg); }
+
+  main > .content { padding: 0 1.5rem; }
+
+  /* ---------- tool panel ---------- */
+  .panel {
+    margin-top: -1.75rem;
+    background: var(--card);
+    border: 4px solid var(--ink);
+    border-radius: 22px;
+    box-shadow: 9px 9px 0 var(--ink);
+    padding: 1.85rem;
+    position: relative;
+    z-index: 2;
+  }
+  .panel-tag {
+    position: absolute;
+    top: -18px;
+    left: 24px;
+    background: var(--pink);
+    color: #fff;
+    font-weight: 800;
+    font-size: .78rem;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    padding: .35rem .8rem;
+    border: 3px solid var(--ink);
+    border-radius: 999px;
+    transform: rotate(-2deg);
+  }
+
+  .switch input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .switch {
+    display: flex;
+    gap: .5rem;
+    margin: 1rem 0 1.5rem;
+  }
+  .switch-btn {
+    flex: 1;
+    text-align: center;
+    padding: .6rem .5rem;
+    border: 3px solid var(--ink);
+    border-radius: 12px;
+    font-weight: 800;
+    font-size: .82rem;
+    text-transform: uppercase;
+    letter-spacing: .02em;
+    cursor: pointer;
+    user-select: none;
+    background: var(--card);
+    transition: background .15s ease, color .15s ease, transform .1s ease;
+  }
+  .switch input:checked + .switch-btn {
+    background: var(--yellow);
+    box-shadow: 4px 4px 0 var(--ink);
+    transform: translate(-2px, -2px);
+  }
+  .switch input:focus-visible + .switch-btn { outline: 3px solid var(--blue); outline-offset: 2px; }
+  .panel-idle { display: block; }
+  .panel-result { display: none; }
+  .panel:has(#tab-result:checked) .panel-idle { display: none; }
+  .panel:has(#tab-result:checked) .panel-result { display: block; }
+
+  .dropzone {
+    border: 3px dashed var(--ink);
+    border-radius: 16px;
+    padding: 2.75rem 1.5rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    background:
+      repeating-linear-gradient(135deg, rgba(37,71,214,.05) 0 10px, transparent 10px 20px);
+  }
+  .drop-icon {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: var(--mint);
+    border: 3px solid var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .drop-icon .arrow {
+    width: 0; height: 0;
+    border-left: 9px solid transparent;
+    border-right: 9px solid transparent;
+    border-top: 13px solid var(--ink);
+    margin-top: 6px;
+  }
+  .drop-icon .stem {
+    position: absolute;
+  }
+  .drop-icon-wrap { position: relative; display: flex; flex-direction: column; align-items: center; }
+  .drop-icon-wrap .bar { width: 4px; height: 16px; background: var(--ink); border-radius: 2px; }
+  .dropzone__title { font-weight: 800; font-size: 1.15rem; }
+  .dropzone__hint {
+    font-family: var(--mono);
+    font-size: .82rem;
+    font-weight: 700;
+    letter-spacing: .02em;
+  }
+  .privacy-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    background: var(--mint);
+    color: var(--ink);
+    border: 3px solid var(--ink);
+    border-radius: 999px;
+    padding: .3rem .8rem;
+    font-weight: 800;
+    font-size: .78rem;
+  }
+
+  /* result */
+  .result-card {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 1.5rem;
+    border: 3px solid var(--ink);
+    border-radius: 16px;
+    background: #fffceb;
+  }
+  .count-block {
+    background: var(--yellow);
+    border: 3px solid var(--ink);
+    border-radius: 14px;
+    padding: .5rem 1rem;
+    box-shadow: 5px 5px 0 var(--ink);
+  }
+  .count-block .n {
+    font-size: 2.9rem;
+    font-weight: 900;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  .count-block .label {
+    font-size: .68rem;
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+  .result-meta { display: flex; flex-direction: column; gap: .4rem; min-width: 0; }
+  .result-meta .camera { font-weight: 800; font-size: 1.1rem; }
+  .result-meta .file, .result-meta .date {
+    font-family: var(--mono);
+    font-size: .8rem;
+    font-weight: 700;
+    color: #4a463f;
+  }
+  .verified-pill {
+    align-self: flex-start;
+    background: var(--mint);
+    border: 2px solid var(--ink);
+    border-radius: 999px;
+    padding: .2rem .65rem;
+    font-size: .68rem;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+
+  /* ---------- format row ---------- */
+  .format-row { margin-top: 2rem; text-align: center; }
+  .format-row__label {
+    font-weight: 800;
+    font-size: .78rem;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    margin-bottom: .8rem;
+    color: #4a463f;
+  }
+  .format-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: .55rem; }
+  .format-chip {
+    font-family: var(--mono);
+    font-weight: 800;
+    font-size: .78rem;
+    padding: .4rem .75rem;
+    border: 3px solid var(--ink);
+    border-radius: 10px;
+    background: var(--card);
+    transition: transform .1s ease, box-shadow .1s ease;
+  }
+  .format-chip:nth-child(odd) { transform: rotate(-2deg); }
+  .format-chip:nth-child(even) { transform: rotate(2deg); }
+  .format-chip:hover { box-shadow: 3px 3px 0 var(--ink); transform: translate(-1px,-1px); }
+
+  /* ---------- footer ---------- */
+  .site-footer {
+    margin-top: 3rem;
+    background: var(--ink);
+    color: #fff;
+    border-top: 4px solid var(--ink);
+    padding: 2.25rem 1.5rem;
+    text-align: center;
+  }
+  .footer-links { margin-bottom: 1.25rem; }
+  .footer-links a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 800;
+    border-bottom: 3px solid var(--yellow);
+    padding-bottom: 2px;
+  }
+  .coffee-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .7rem 1.3rem;
+    border-radius: 999px;
+    border: 3px solid #fff;
+    background: var(--pink);
+    color: #fff !important;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: .92rem;
+    box-shadow: 4px 4px 0 #fff2;
+  }
+  .lang-row {
+    display: flex;
+    justify-content: center;
+    gap: .5rem;
+    margin-top: 1.6rem;
+    flex-wrap: wrap;
+  }
+  .lang-row a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: .74rem;
+    padding: .3rem .6rem;
+    border: 2px solid #665f52;
+    border-radius: 8px;
+  }
+  .lang-row a.active { border-color: var(--yellow); color: var(--yellow); }
+
+  @media (max-width: 640px) {
+    .hero-band { padding: 2.25rem 1.1rem 2.25rem; }
+    .site-header h1 { font-size: 2.35rem; }
+    .content { padding: 0 1.1rem; }
+    .panel { padding: 1.25rem; border-radius: 16px; box-shadow: 6px 6px 0 var(--ink); }
+    .count-block .n { font-size: 2.1rem; }
+    .result-card { padding: 1.1rem; }
+  }
+</style>
+</head>
+<body>
+<main>
+
+  <div class="hero-band">
+    <header class="site-header">
+      <h1>True<span class="mark">Shutter</span></h1>
+      <p class="tagline">Drop a RAW file. Get the exact shutter count. Nothing ever leaves your browser.</p>
+      <div class="trust-stickers">
+        <span class="sticker">⚡ Instant</span>
+        <span class="sticker">🔒 Zero upload</span>
+      </div>
+    </header>
+  </div>
+
+  <div class="content">
+    <section class="panel">
+      <span class="panel-tag">Try it</span>
+
+      <div class="tabs">
+        <div class="switch">
+          <input type="radio" name="ls-tabs" id="tab-idle" checked>
+          <label for="tab-idle" class="switch-btn">Idle state</label>
+          <input type="radio" name="ls-tabs" id="tab-result">
+          <label for="tab-result" class="switch-btn">Result state</label>
+        </div>
+
+        <div class="panels">
+          <div class="panel-idle">
+            <div class="dropzone">
+              <div class="drop-icon-wrap">
+                <div class="drop-icon"><div class="arrow"></div></div>
+              </div>
+              <div class="dropzone__title">Drop your RAW file here, or click to choose</div>
+              <div class="dropzone__hint">NEF · ARW · CR3 · CR2 · RAF · DNG · JPEG</div>
+              <span class="privacy-chip">100% local — no upload, ever</span>
+            </div>
+          </div>
+
+          <div class="panel-result">
+            <div class="result-card">
+              <div class="count-block">
+                <div class="n">24,318</div>
+                <div class="label">Actuations</div>
+              </div>
+              <div class="result-meta">
+                <div class="camera">Canon EOS R6</div>
+                <div class="file">IMG_4821.CR3</div>
+                <div class="date">Jun 14, 2026 · 10:22</div>
+                <span class="verified-pill">Verified</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="format-row">
+      <div class="format-row__label">Reads these formats</div>
+      <div class="format-chips">
+        <span class="format-chip">NEF</span>
+        <span class="format-chip">ARW</span>
+        <span class="format-chip">CR3</span>
+        <span class="format-chip">CR2</span>
+        <span class="format-chip">RAF</span>
+        <span class="format-chip">DNG</span>
+        <span class="format-chip">JPEG</span>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-links"><a href="#">Browse all 142 supported cameras →</a></div>
+    <a class="coffee-btn" href="#">☕ Buy me a coffee</a>
+    <nav class="lang-row" aria-label="Language">
+      <a href="#" class="active">EN</a>
+      <a href="#">ES</a>
+      <a href="#">DE</a>
+      <a href="#">FR</a>
+      <a href="#">JA</a>
+    </nav>
+  </footer>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>TrueShutter — Darkroom concept</title>
+<style>
+  :root {
+    --bg: #1c1512;
+    --bg-panel: #241a15;
+    --bg-frame: #150f0c;
+    --paper: #f3e6d3;
+    --paper-dim: #cbb59c;
+    --paper-faint: #8f7a67;
+    --accent: #ff5a3c;
+    --accent-dim: #7a3225;
+    --brass: #cfa15c;
+    --border: #3a2a22;
+    --ok: #8fae6a;
+    --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+    --mono: "Courier New", ui-monospace, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background:
+      radial-gradient(ellipse 1000px 500px at 50% -8%, #2a1e18 0%, transparent 55%),
+      var(--bg);
+    color: var(--paper);
+    font-family: var(--serif);
+    line-height: 1.6;
+  }
+  /* subtle grain */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: .05;
+    mix-blend-mode: overlay;
+    background-image:
+      radial-gradient(circle at 10% 20%, #fff 0, transparent 1px),
+      radial-gradient(circle at 80% 60%, #fff 0, transparent 1px),
+      radial-gradient(circle at 40% 80%, #fff 0, transparent 1px),
+      radial-gradient(circle at 60% 10%, #fff 0, transparent 1px);
+    background-size: 3px 3px, 5px 5px, 4px 4px, 6px 6px;
+  }
+  main {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 3.5rem 1.5rem 5rem;
+    position: relative;
+  }
+
+  .site-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .site-header h1 {
+    font-size: 2.6rem;
+    margin: 0 0 .6rem;
+    font-weight: 400;
+    font-style: italic;
+    letter-spacing: .01em;
+    color: var(--paper);
+  }
+  .site-header h1 em {
+    font-style: normal;
+    color: var(--accent);
+  }
+  .site-header .tagline {
+    color: var(--paper-dim);
+    max-width: 32rem;
+    margin: 0 auto;
+    font-size: 1.02rem;
+  }
+  .privacy-stamp {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    margin-top: 1.2rem;
+    padding: .4rem 1rem;
+    border: 1px solid var(--accent-dim);
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: .72rem;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    transform: rotate(-1.5deg);
+    border-radius: 2px;
+  }
+
+  /* ---- tool panel ---- */
+  .tool-panel {
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 1.75rem;
+    position: relative;
+  }
+  .tool-panel::before, .tool-panel::after {
+    content: "";
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border: 1px solid var(--brass);
+    opacity: .55;
+  }
+  .tool-panel::before { top: 10px; left: 10px; border-right: none; border-bottom: none; }
+  .tool-panel::after { bottom: 10px; right: 10px; border-left: none; border-top: none; }
+
+  .panel-label {
+    font-family: var(--mono);
+    font-size: .68rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--paper-faint);
+    text-align: center;
+    margin-bottom: 1.25rem;
+  }
+
+  .tabs input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .tab-switch {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    font-family: var(--mono);
+    font-size: .75rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+  .tab-switch label {
+    color: var(--paper-faint);
+    cursor: pointer;
+    padding-bottom: .35rem;
+    border-bottom: 2px solid transparent;
+    user-select: none;
+    transition: color .2s ease, border-color .2s ease;
+  }
+  .tabs input:checked + label {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+  .tabs input:focus-visible + label { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  /* crossfade + slide between idle/result — both panels stay mounted so the
+     opacity/transform changes actually transition instead of display:none jumping */
+  .panels {
+    position: relative;
+    display: grid;
+  }
+  .panel-idle, .panel-result {
+    grid-area: 1 / 1;
+    transition: opacity .45s cubic-bezier(.2,.8,.2,1), transform .45s cubic-bezier(.2,.8,.2,1);
+  }
+  .panel-idle {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+  }
+  .panel-result {
+    opacity: 0;
+    transform: translateX(28px);
+    pointer-events: none;
+  }
+  #tab-result:checked ~ .panels .panel-idle {
+    opacity: 0;
+    transform: translateX(-28px);
+    pointer-events: none;
+  }
+  #tab-result:checked ~ .panels .panel-result {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+  }
+
+  .drop-frame {
+    border: 1px solid var(--border);
+    background: var(--bg-frame);
+    border-radius: 2px;
+  }
+  .drop-frame__body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .85rem;
+    text-align: center;
+    padding: 2.5rem 1.5rem;
+  }
+
+  /* ---- animated shutter icon: a hexagonal iris that blinks shut and open,
+     one "click" per loop, like a mechanical shutter actuating ---- */
+  .shutter-icon {
+    width: 46px;
+    height: 46px;
+    position: relative;
+    border-radius: 50%;
+    border: 2px solid var(--paper-faint);
+    overflow: hidden;
+    animation: shutterRing 4.5s ease-in-out infinite;
+  }
+  .shutter-icon .iris {
+    position: absolute;
+    inset: 0;
+    background: var(--accent);
+    clip-path: polygon(50% 4%, 89.8% 27%, 89.8% 73%, 50% 96%, 10.2% 73%, 10.2% 27%);
+    animation: shutterBlink 4.5s cubic-bezier(.2,.8,.2,1) infinite;
+  }
+  @keyframes shutterBlink {
+    0%, 78%   { clip-path: polygon(50% 4%, 89.8% 27%, 89.8% 73%, 50% 96%, 10.2% 73%, 10.2% 27%); }
+    86%       { clip-path: polygon(50% 44%, 55.2% 47%, 55.2% 53%, 50% 56%, 44.8% 53%, 44.8% 47%); }
+    92%, 100% { clip-path: polygon(50% 4%, 89.8% 27%, 89.8% 73%, 50% 96%, 10.2% 73%, 10.2% 27%); }
+  }
+  @keyframes shutterRing {
+    0%, 78%   { border-color: var(--paper-faint); }
+    86%       { border-color: var(--accent); }
+    92%, 100% { border-color: var(--paper-faint); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .shutter-icon, .shutter-icon .iris { animation: none; }
+  }
+
+  .drop-frame__title {
+    font-size: 1.15rem;
+    font-style: italic;
+  }
+  .drop-frame__hint {
+    font-family: var(--mono);
+    font-size: .78rem;
+    color: var(--paper-faint);
+    letter-spacing: .03em;
+  }
+
+  /* result panel */
+  .exposure-row {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    padding: 1.75rem 1.5rem;
+    background: var(--bg-frame);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    flex-wrap: wrap;
+  }
+  .exposure-count {
+    font-size: 3.1rem;
+    font-weight: 700;
+    font-family: var(--serif);
+    color: var(--accent);
+    line-height: 1;
+    min-width: 3.5ch;
+  }
+  .exposure-meta {
+    display: flex;
+    flex-direction: column;
+    gap: .3rem;
+  }
+  .exposure-meta .camera {
+    font-size: 1.05rem;
+    font-style: italic;
+  }
+  .exposure-meta .file {
+    font-family: var(--mono);
+    font-size: .8rem;
+    color: var(--paper-faint);
+  }
+  .exposure-meta .date {
+    font-family: var(--mono);
+    font-size: .78rem;
+    color: var(--paper-faint);
+  }
+  .exposure-meta .verified {
+    margin-top: .3rem;
+    display: inline-block;
+    width: fit-content;
+    font-family: var(--mono);
+    font-size: .68rem;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--ok);
+    border-bottom: 1px dotted var(--ok);
+  }
+
+  /* format row */
+  .format-row {
+    margin-top: 1.75rem;
+    text-align: center;
+  }
+  .format-row__label {
+    font-family: var(--mono);
+    font-size: .68rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--paper-faint);
+    margin-bottom: .7rem;
+  }
+  .format-chips {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: .6rem;
+  }
+  .format-chip {
+    font-family: var(--mono);
+    font-size: .74rem;
+    padding: .3rem .7rem;
+    border: 1px solid var(--border);
+    color: var(--paper-dim);
+    border-radius: 999px;
+    background: var(--bg-panel);
+  }
+
+  .site-footer {
+    margin-top: 3.5rem;
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+  .footer-links {
+    margin-bottom: 1.25rem;
+  }
+  .footer-links a {
+    color: var(--paper-dim);
+    text-decoration: none;
+    border-bottom: 1px solid var(--brass);
+    font-size: .95rem;
+  }
+  .coffee-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .5rem 1.1rem;
+    border: 1px solid var(--brass);
+    color: var(--paper) !important;
+    text-decoration: none;
+    font-family: var(--mono);
+    font-size: .82rem;
+    border-radius: 2px;
+    background: var(--bg-panel);
+  }
+  .lang-strip {
+    display: flex;
+    justify-content: center;
+    gap: .4rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+    font-family: var(--mono);
+  }
+  .lang-strip a {
+    color: var(--paper-faint);
+    text-decoration: none;
+    font-size: .72rem;
+    padding: .25rem .5rem;
+    border: 1px solid var(--border);
+  }
+  .lang-strip a.active {
+    color: var(--accent);
+    border-color: var(--accent-dim);
+  }
+
+  @media (max-width: 640px) {
+    main { padding: 2.25rem 1rem 3.5rem; }
+    .site-header h1 { font-size: 2rem; }
+    .exposure-count { font-size: 2.4rem; }
+    .exposure-row { gap: 1rem; }
+    .tool-panel { padding: 1.1rem; }
+  }
+</style>
+</head>
+<body>
+<main>
+
+  <header class="site-header">
+    <h1>True<em>Shutter</em></h1>
+    <p class="tagline">Check your camera's shutter count from a RAW file — read instantly, right in your browser.</p>
+    <div class="privacy-stamp">100% local · zero upload</div>
+  </header>
+
+  <section class="tool-panel">
+    <div class="panel-label">Shutter Reader</div>
+
+    <div class="tabs">
+      <input type="radio" name="dr-tabs" id="tab-idle" checked>
+      <input type="radio" name="dr-tabs" id="tab-result">
+      <div class="tab-switch">
+        <label for="tab-idle">Idle</label>
+        <label for="tab-result">Result</label>
+      </div>
+
+      <div class="panels">
+        <div class="panel-idle">
+          <div class="drop-frame">
+            <div class="drop-frame__body">
+              <div class="shutter-icon"><span class="iris"></span></div>
+              <div class="drop-frame__title">Drop your RAW file here, or click to choose</div>
+              <div class="drop-frame__hint">NEF · ARW · CR3 · CR2 · RAF · DNG · JPEG</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-result">
+          <div class="exposure-row">
+            <div class="exposure-count">24,318</div>
+            <div class="exposure-meta">
+              <div class="camera">Canon EOS R6</div>
+              <div class="file">IMG_4821.CR3</div>
+              <div class="date">Jun 14, 2026 · 10:22</div>
+              <span class="verified">Verified against exiftool</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="format-row">
+    <div class="format-row__label">Reads these formats</div>
+    <div class="format-chips">
+      <span class="format-chip">NEF</span>
+      <span class="format-chip">ARW</span>
+      <span class="format-chip">CR3</span>
+      <span class="format-chip">CR2</span>
+      <span class="format-chip">RAF</span>
+      <span class="format-chip">DNG</span>
+      <span class="format-chip">JPEG</span>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-links">
+      <a href="#">Browse supported cameras →</a>
+    </div>
+    <a class="coffee-tag" href="#">☕ Buy me a coffee</a>
+    <nav class="lang-strip" aria-label="Language">
+      <a href="#" class="active">EN</a>
+      <a href="#">ES</a>
+      <a href="#">DE</a>
+      <a href="#">FR</a>
+      <a href="#">JA</a>
+    </nav>
+  </footer>
+
+</main>
+</body>
+</html>

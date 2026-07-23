@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>TrueShutter — Quiet Paper concept</title>
+<style>
+  :root {
+    --paper: #faf8f4;
+    --ink: #232019;
+    --ink-dim: #756e5f;
+    --ink-faint: #a89f8c;
+    --hairline: #e4ddce;
+    --clay: #9c5a3c;
+    --clay-soft: #f0e2d8;
+    --sans: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  main {
+    max-width: 620px;
+    margin: 0 auto;
+    padding: 5.5rem 1.75rem 6rem;
+  }
+
+  /* ---------- header ---------- */
+  .site-header {
+    text-align: center;
+    margin-bottom: 4.5rem;
+  }
+  .site-header h1 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 2.6rem;
+    letter-spacing: .01em;
+    margin: 0 0 1.1rem;
+  }
+  .site-header .tagline {
+    color: var(--ink-dim);
+    max-width: 26rem;
+    margin: 0 auto 1.5rem;
+    font-size: 1rem;
+  }
+  .trust-line {
+    font-size: .78rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--clay);
+  }
+  .trust-line::before {
+    content: "";
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--clay);
+    margin-right: .55rem;
+    vertical-align: middle;
+  }
+
+  /* ---------- tool area ---------- */
+  .tool-label {
+    text-align: center;
+    font-size: .72rem;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 1.5rem;
+  }
+
+  .switch input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .switch {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: .88rem;
+  }
+  .switch-btn {
+    color: var(--ink-faint);
+    cursor: pointer;
+    user-select: none;
+    padding-bottom: 2px;
+    border-bottom: 1px solid transparent;
+    transition: color .2s ease, border-color .2s ease;
+  }
+  .switch .sep { color: var(--hairline); margin: 0 .85rem; }
+  .switch input:checked + .switch-btn {
+    color: var(--ink);
+    border-bottom-color: var(--clay);
+  }
+  .switch input:focus-visible + .switch-btn { outline: 1px solid var(--clay); outline-offset: 3px; }
+  .panel-idle { display: block; }
+  .panel-result { display: none; }
+  .tabs:has(#tab-result:checked) .panel-idle { display: none; }
+  .tabs:has(#tab-result:checked) .panel-result { display: block; }
+
+  .field {
+    border: 1px solid var(--hairline);
+    padding: 4rem 2rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.35rem;
+  }
+  .lens-ring {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid var(--ink-faint);
+    position: relative;
+  }
+  .lens-ring .center {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--clay);
+  }
+  .field__title {
+    font-size: 1.05rem;
+  }
+  .field__hint {
+    font-size: .82rem;
+    letter-spacing: .06em;
+    color: var(--ink-faint);
+  }
+  .field__cta {
+    font-size: .78rem;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    border-bottom: 1px solid var(--hairline);
+    padding-bottom: 2px;
+  }
+
+  /* result */
+  .readout {
+    text-align: center;
+    padding: 2.5rem 1rem 1rem;
+  }
+  .readout .label {
+    font-size: .72rem;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: .6rem;
+  }
+  .readout .number {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 3.6rem;
+    letter-spacing: 0;
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+  }
+  .readout-detail {
+    margin-top: 2rem;
+    border-top: 1px solid var(--hairline);
+    padding-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: .55rem;
+    align-items: center;
+  }
+  .readout-detail .camera { font-size: 1rem; }
+  .readout-detail .file,
+  .readout-detail .date {
+    font-family: var(--mono);
+    font-size: .8rem;
+    color: var(--ink-dim);
+  }
+  .readout-detail .verified {
+    margin-top: .4rem;
+    font-size: .72rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--clay);
+  }
+
+  /* ---------- format row ---------- */
+  .format-row {
+    margin-top: 3rem;
+    text-align: center;
+    font-size: .84rem;
+    letter-spacing: .03em;
+    color: var(--ink-dim);
+  }
+  .format-row__label {
+    font-size: .72rem;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: .85rem;
+  }
+  .format-row .list span:not(:last-child)::after {
+    content: "·";
+    margin: 0 .6rem;
+    color: var(--hairline);
+  }
+
+  /* ---------- footer ---------- */
+  .site-footer {
+    margin-top: 5rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--hairline);
+    text-align: center;
+  }
+  .footer-links { margin-bottom: 1.5rem; }
+  .footer-links a {
+    color: var(--ink-dim);
+    text-decoration: none;
+    font-size: .92rem;
+    border-bottom: 1px solid var(--hairline);
+    padding-bottom: 2px;
+    transition: color .2s ease, border-color .2s ease;
+  }
+  .footer-links a:hover { color: var(--clay); border-color: var(--clay); }
+  .coffee-link {
+    color: var(--ink-dim);
+    text-decoration: none;
+    font-size: .88rem;
+    border-bottom: 1px solid var(--hairline);
+    padding-bottom: 2px;
+  }
+  .coffee-link:hover { color: var(--clay); border-color: var(--clay); }
+  .lang-row {
+    display: flex;
+    justify-content: center;
+    gap: .75rem;
+    margin-top: 2rem;
+    font-size: .75rem;
+    letter-spacing: .04em;
+  }
+  .lang-row a { color: var(--ink-faint); text-decoration: none; }
+  .lang-row a.active { color: var(--clay); }
+  .lang-row .sep { color: var(--hairline); }
+
+  @media (max-width: 640px) {
+    main { padding: 3.5rem 1.35rem 4rem; }
+    .site-header { margin-bottom: 3rem; }
+    .site-header h1 { font-size: 2.05rem; }
+    .field { padding: 2.75rem 1.25rem; }
+    .readout .number { font-size: 2.6rem; }
+  }
+</style>
+</head>
+<body>
+<main>
+
+  <header class="site-header">
+    <h1>TrueShutter</h1>
+    <p class="tagline">A quiet way to read your camera's shutter count. Drop a RAW file — the number appears, right in your browser.</p>
+    <p class="trust-line">Nothing is ever uploaded</p>
+  </header>
+
+  <section>
+    <div class="tool-label">Shutter reader</div>
+
+    <div class="tabs">
+      <div class="switch">
+        <input type="radio" name="qp-tabs" id="tab-idle" checked>
+        <label for="tab-idle" class="switch-btn">Idle</label><span class="sep">/</span><input type="radio" name="qp-tabs" id="tab-result">
+        <label for="tab-result" class="switch-btn">Result</label>
+      </div>
+
+      <div class="panels">
+        <div class="panel-idle">
+          <div class="field">
+            <div class="lens-ring"><span class="center"></span></div>
+            <div class="field__title">Drop your RAW file here</div>
+            <div class="field__hint">NEF &nbsp;·&nbsp; ARW &nbsp;·&nbsp; CR3 &nbsp;·&nbsp; CR2 &nbsp;·&nbsp; RAF &nbsp;·&nbsp; DNG &nbsp;·&nbsp; JPEG</div>
+            <div class="field__cta">or click to choose a file</div>
+          </div>
+        </div>
+
+        <div class="panel-result">
+          <div class="readout">
+            <div class="label">Shutter count</div>
+            <div class="number">24,318</div>
+          </div>
+          <div class="readout-detail">
+            <div class="camera">Canon EOS R6</div>
+            <div class="file">IMG_4821.CR3</div>
+            <div class="date">Jun 14, 2026, 10:22</div>
+            <div class="verified">Verified</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="format-row">
+    <div class="format-row__label">Reads these formats</div>
+    <div class="list">
+      <span>NEF</span><span>ARW</span><span>CR3</span><span>CR2</span><span>RAF</span><span>DNG</span><span>JPEG</span>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-links"><a href="#">Browse all 142 supported cameras</a></div>
+    <a class="coffee-link" href="#">Buy me a coffee ↗</a>
+    <nav class="lang-row" aria-label="Language">
+      <a href="#" class="active">EN</a><span class="sep">/</span>
+      <a href="#">ES</a><span class="sep">/</span>
+      <a href="#">DE</a><span class="sep">/</span>
+      <a href="#">FR</a><span class="sep">/</span>
+      <a href="#">JA</a>
+    </nav>
+  </footer>
+
+</main>
+</body>
+</html>

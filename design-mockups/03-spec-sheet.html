@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>TrueShutter — Spec Sheet concept</title>
+<style>
+  :root {
+    --paper: #fdfcf9;
+    --grid-line: #eae7dd;
+    --ink: #14130f;
+    --ink-dim: #5c5a50;
+    --ink-faint: #9d9a8c;
+    --line: #d9d5c6;
+    --red: #c92f16;
+    --red-soft: #f6ddd5;
+    --ok: #1c7a4e;
+    --sans: Helvetica Neue, Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background:
+      repeating-linear-gradient(0deg, transparent 0px, transparent 31px, var(--grid-line) 31px, var(--grid-line) 32px),
+      repeating-linear-gradient(90deg, transparent 0px, transparent 31px, var(--grid-line) 31px, var(--grid-line) 32px),
+      var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  main {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 5rem;
+  }
+
+  /* ---------- header ---------- */
+  .doc-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--ink);
+    font-family: var(--mono);
+    font-size: .68rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    flex-wrap: wrap;
+  }
+  .site-header {
+    padding: 2.25rem 0 2.5rem;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 2.5rem;
+  }
+  .site-header h1 {
+    font-size: 3.1rem;
+    margin: 0 0 .75rem;
+    letter-spacing: -0.03em;
+    font-weight: 800;
+  }
+  .site-header h1 .dot { color: var(--red); }
+  .site-header .tagline {
+    color: var(--ink-dim);
+    max-width: 34rem;
+    font-size: 1.08rem;
+    margin: 0 0 1.25rem;
+  }
+  .trust-row {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    font-family: var(--mono);
+    font-size: .74rem;
+    letter-spacing: .04em;
+    color: var(--ink-dim);
+  }
+  .trust-row span { display: inline-flex; align-items: center; gap: .45rem; }
+  .trust-row i {
+    width: 7px;
+    height: 7px;
+    background: var(--red);
+    display: inline-block;
+  }
+
+  /* ---------- tool panel ---------- */
+  .panel-titlebar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--mono);
+    font-size: .7rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: .6rem 1rem;
+  }
+  .panel-titlebar .fig { color: #b8b4a4; }
+  .panel-titlebar .sq { width: 8px; height: 8px; background: var(--red); display: inline-block; }
+
+  .specimen {
+    border: 1px solid var(--ink);
+    border-top: none;
+    background: var(--paper);
+    padding: 1.75rem;
+  }
+
+  .switch input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .switch {
+    display: inline-flex;
+    border: 1px solid var(--ink);
+    margin-bottom: 1.5rem;
+  }
+  .switch-btn {
+    padding: .5rem 1.1rem;
+    font-family: var(--mono);
+    font-size: .72rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    user-select: none;
+    color: var(--ink-dim);
+    transition: background .15s ease, color .15s ease;
+  }
+  #tab-idle + .switch-btn { border-right: 1px solid var(--ink); }
+  .switch input:checked + .switch-btn {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .switch input:focus-visible + .switch-btn { outline: 2px solid var(--red); outline-offset: -2px; }
+  .panel-idle { display: block; }
+  .panel-result { display: none; }
+  .tabs:has(#tab-result:checked) .panel-idle { display: none; }
+  .tabs:has(#tab-result:checked) .panel-result { display: block; }
+
+  /* idle: crosshair reticle + dashed field */
+  .field {
+    border: 1px dashed var(--line);
+    padding: 3rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+  }
+  .reticle {
+    width: 52px;
+    height: 52px;
+    border: 1px solid var(--ink);
+    border-radius: 50%;
+    position: relative;
+  }
+  .reticle::before, .reticle::after {
+    content: "";
+    position: absolute;
+    background: var(--ink);
+  }
+  .reticle::before { top: 50%; left: -9px; right: -9px; height: 1px; transform: translateY(-50%); }
+  .reticle::after { left: 50%; top: -9px; bottom: -9px; width: 1px; transform: translateX(-50%); }
+  .reticle .dot {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--red);
+  }
+  .field__title { font-weight: 700; font-size: 1.05rem; }
+  .field__hint {
+    font-family: var(--mono);
+    font-size: .78rem;
+    letter-spacing: .04em;
+    color: var(--ink-dim);
+  }
+  .field__privacy {
+    font-family: var(--mono);
+    font-size: .74rem;
+    color: var(--red);
+    border-bottom: 1px solid var(--red);
+    padding-bottom: 1px;
+  }
+
+  /* result: certificate-style readout */
+  .readout-label {
+    font-family: var(--mono);
+    font-size: .68rem;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: .35rem;
+  }
+  .readout-number {
+    font-size: 4.2rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    display: inline-block;
+    border-bottom: 4px solid var(--red);
+    padding-bottom: .2rem;
+  }
+  .spec-list {
+    margin-top: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: .55rem;
+  }
+  .spec-row {
+    display: flex;
+    align-items: baseline;
+    gap: .5rem;
+    font-size: .92rem;
+  }
+  .spec-row .k {
+    font-family: var(--mono);
+    font-size: .72rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    white-space: nowrap;
+  }
+  .spec-row .leader {
+    flex: 1;
+    border-bottom: 1px dotted var(--line);
+    height: .5em;
+  }
+  .spec-row .v { font-family: var(--mono); white-space: nowrap; }
+  .spec-row .v.status-ok { color: var(--ok); font-weight: 700; }
+
+  /* ---------- format row ---------- */
+  .format-row { margin-top: 2.25rem; }
+  .format-row__label {
+    font-family: var(--mono);
+    font-size: .68rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: .75rem;
+  }
+  .format-chips { display: flex; flex-wrap: wrap; gap: .55rem; }
+  .format-chip {
+    font-family: var(--mono);
+    font-size: .74rem;
+    letter-spacing: .04em;
+    padding: .35rem .7rem;
+    border: 1px solid var(--ink);
+    color: var(--ink);
+    transition: background .15s ease, color .15s ease;
+  }
+  .format-chip:hover { background: var(--ink); color: var(--paper); }
+
+  /* ---------- footer ---------- */
+  .site-footer {
+    margin-top: 3.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--ink);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .footer-links a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--ink);
+    font-size: .92rem;
+    padding-bottom: 1px;
+  }
+  .footer-links a:hover { color: var(--red); border-color: var(--red); }
+  .coffee-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .55rem 1.1rem;
+    border: 1px solid var(--ink);
+    color: var(--ink) !important;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: .85rem;
+    transition: background .15s ease, color .15s ease;
+  }
+  .coffee-btn:hover { background: var(--ink); color: var(--paper) !important; }
+  .lang-row {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: .6rem;
+    margin-top: 1.75rem;
+    font-family: var(--mono);
+    font-size: .74rem;
+    letter-spacing: .05em;
+  }
+  .lang-row a { color: var(--ink-faint); text-decoration: none; }
+  .lang-row a.active { color: var(--red); border-bottom: 1px solid var(--red); }
+  .lang-row .sep { color: var(--line); }
+
+  @media (max-width: 640px) {
+    main { padding: 1.75rem 1.1rem 3.5rem; }
+    .site-header h1 { font-size: 2.15rem; }
+    .readout-number { font-size: 2.9rem; }
+    .specimen { padding: 1.1rem; }
+    .doc-meta { font-size: .62rem; }
+    .site-footer { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+<main>
+
+  <div class="doc-meta">
+    <span>Digital shutter actuation readout</span>
+    <span>Client-side · No.142</span>
+  </div>
+
+  <header class="site-header">
+    <h1>TrueShutter<span class="dot">.</span></h1>
+    <p class="tagline">Read your camera's exact shutter actuation count from a RAW file — measured on your device, never uploaded.</p>
+    <div class="trust-row">
+      <span><i></i> 100% client-side processing</span>
+      <span><i></i> Zero upload, zero tracking</span>
+    </div>
+  </header>
+
+  <section>
+    <div class="panel-titlebar">
+      <span><span class="fig">Fig. 1 —</span> Shutter Reader</span>
+      <span class="sq"></span>
+    </div>
+    <div class="specimen">
+      <div class="tabs">
+        <div class="switch">
+          <input type="radio" name="ss-tabs" id="tab-idle" checked>
+          <label for="tab-idle" class="switch-btn">Idle</label>
+          <input type="radio" name="ss-tabs" id="tab-result">
+          <label for="tab-result" class="switch-btn">Result</label>
+        </div>
+
+        <div class="panels">
+          <div class="panel-idle">
+            <div class="field">
+              <div class="reticle"><span class="dot"></span></div>
+              <div class="field__title">Drop RAW file here, or click to browse</div>
+              <div class="field__hint">NEF · ARW · CR3 · CR2 · RAF · DNG · JPEG</div>
+              <div class="field__privacy">Nothing leaves this device</div>
+            </div>
+          </div>
+
+          <div class="panel-result">
+            <div class="readout-label">Shutter count</div>
+            <div class="readout-number">24,318</div>
+            <div class="spec-list">
+              <div class="spec-row"><span class="k">Camera</span><span class="leader"></span><span class="v">Canon EOS R6</span></div>
+              <div class="spec-row"><span class="k">File</span><span class="leader"></span><span class="v">IMG_4821.CR3</span></div>
+              <div class="spec-row"><span class="k">Date taken</span><span class="leader"></span><span class="v">Jun 14, 2026, 10:22</span></div>
+              <div class="spec-row"><span class="k">Status</span><span class="leader"></span><span class="v status-ok">Verified</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="format-row">
+    <div class="format-row__label">Reads these formats</div>
+    <div class="format-chips">
+      <span class="format-chip">NEF</span>
+      <span class="format-chip">ARW</span>
+      <span class="format-chip">CR3</span>
+      <span class="format-chip">CR2</span>
+      <span class="format-chip">RAF</span>
+      <span class="format-chip">DNG</span>
+      <span class="format-chip">JPEG</span>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-links"><a href="#">Browse all 142 supported cameras →</a></div>
+    <a class="coffee-btn" href="#">☕ Buy me a coffee</a>
+    <nav class="lang-row" aria-label="Language">
+      <a href="#" class="active">EN</a><span class="sep">/</span>
+      <a href="#">ES</a><span class="sep">/</span>
+      <a href="#">DE</a><span class="sep">/</span>
+      <a href="#">FR</a><span class="sep">/</span>
+      <a href="#">JA</a>
+    </nav>
+  </footer>
+
+</main>
+</body>
+</html>
