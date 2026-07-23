@@ -1,0 +1,142 @@
+---
+import LanguageSwitcher from '../components/LanguageSwitcher.astro';
+import { getUiStrings } from '../i18n/ui';
+import { defaultLocale, type Locale } from '../i18n/config';
+import '../styles/global.css';
+
+interface Props {
+  locale: Locale;
+  camera: {
+    id: string;
+    data: {
+      make: string;
+      model: string;
+      format: string;
+      status: 'confirmed' | 'expected' | 'unsupported';
+      mechanism: string;
+      ratedShutterLife: number | null;
+      notes: string | null;
+    };
+  };
+}
+
+const { locale, camera } = Astro.props;
+const t = getUiStrings(locale);
+const { make, model, format, status, mechanism, ratedShutterLife, notes } = camera.data;
+
+const base = import.meta.env.BASE_URL;
+const localePrefix = locale === defaultLocale ? '' : `${locale}/`;
+const homeHref = `${base}${localePrefix}`;
+const localeTag: Record<Locale, string> = { en: 'en-US', es: 'es-ES', de: 'de-DE', fr: 'fr-FR', ja: 'ja-JP' };
+
+const statusCopy = {
+  confirmed: t.confirmedCopy(format),
+  expected: t.expectedCopy,
+  // Per-camera investigative notes are only written in English — translating 140+ entries'
+  // worth of specific technical commentary isn't practical yet, so this one field stays as-is
+  // across locales rather than being silently blank.
+  unsupported: notes ?? t.unsupportedCopy,
+};
+
+const title = `${make} ${model} ${t.cameraPageTitleSuffix}`;
+const description =
+  status === 'unsupported'
+    ? `${make} ${model} — ${t.camerasPageDescription}`
+    : t.mechanismCopy({ makeModel: `${make} ${model}`, mechanism, format });
+---
+
+<html lang={locale}>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content={description} />
+		<title>{title}</title>
+	</head>
+	<body>
+		<main>
+			<header class="site-header">
+				<p class="breadcrumb"><a href={homeHref}>TrueShutter</a> / {t.camerasPageTitle} / {make} {model}</p>
+				<h1>{make} {model} {t.cameraPageTitleSuffix}</h1>
+				<p class={`status-badge status-badge--${status}`}>
+					{status === 'confirmed' && t.statusConfirmed}
+					{status === 'expected' && t.statusExpected}
+					{status === 'unsupported' && t.statusUnsupported}
+				</p>
+			</header>
+
+			<section class="camera-detail">
+				<p>{statusCopy[status]}</p>
+
+				{status !== 'unsupported' && (
+					<>
+						<p>{t.mechanismCopy({ makeModel: `${make} ${model}`, mechanism, format })}</p>
+						<a class="cta" href={homeHref}>
+							{t.checkCameraCta(model)}
+						</a>
+					</>
+				)}
+
+				{ratedShutterLife && (
+					<p>{t.ratedLifeCopy({ model, life: ratedShutterLife.toLocaleString(localeTag[locale]) })}</p>
+				)}
+			</section>
+
+			<footer class="site-footer">
+				<p><a href={`${base}${localePrefix}cameras`}>{t.allSupportedCameras}</a></p>
+				<a class="coffee-link" href="https://buymeacoffee.com/mertozdogan" target="_blank" rel="noopener noreferrer">
+					{t.coffeeLink}
+				</a>
+				<LanguageSwitcher locale={locale} path={`cameras/${camera.id}`} />
+			</footer>
+		</main>
+	</body>
+</html>
+
+<style>
+	.breadcrumb {
+		color: var(--text-dim);
+		font-size: 0.85rem;
+	}
+	.breadcrumb a {
+		color: inherit;
+	}
+	.status-badge {
+		display: inline-block;
+		font-weight: 600;
+		padding: 0.25rem 0.75rem;
+		border-radius: 999px;
+		border: 1px solid var(--border);
+	}
+	.status-badge--confirmed {
+		color: var(--ok);
+		border-color: var(--ok);
+	}
+	.status-badge--expected {
+		color: var(--text-dim);
+	}
+	.status-badge--unsupported {
+		color: var(--error);
+		border-color: var(--error);
+	}
+	.camera-detail {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		background: var(--bg-elevated);
+		border: 1px solid var(--border);
+		border-radius: 12px;
+		padding: 1.5rem;
+	}
+	.cta {
+		display: inline-block;
+		color: var(--bg);
+		background: var(--accent);
+		font-weight: 700;
+		padding: 0.6rem 1.1rem;
+		border-radius: 8px;
+		text-decoration: none;
+		width: fit-content;
+	}
+</style>

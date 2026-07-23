@@ -18,9 +18,13 @@ import { readCanonCr2ShutterCount } from './makernote/canonCr2';
 import { readFujiShutterCount } from './makernote/fuji';
 import { isRaf, findEmbeddedTiffBase } from './raf';
 import { isJpeg, findEmbeddedTiffBase as findJpegTiffBase } from './jpeg';
-import type { RawFormat, ShutterCountResult } from './types';
+import type { RawFormat, ShutterCountResult, Message } from './types';
 
-export type { ShutterCountResult } from './types';
+export type { ShutterCountResult, Message, MessageKey } from './types';
+
+function msg(key: Message['key'], params?: Message['params']): Message {
+  return params ? { key, params } : { key };
+}
 
 export async function readShutterCount(file: File): Promise<ShutterCountResult> {
   let buffer: ArrayBuffer;
@@ -47,7 +51,7 @@ export async function readShutterCount(file: File): Promise<ShutterCountResult> 
   }
 
   if (container !== 'tiff') {
-    return { status: 'unsupported', make: null, model: null, format: extFormat, reason: 'This file is not a recognized RAW format.' };
+    return { status: 'unsupported', make: null, model: null, format: extFormat, reason: msg('unrecognizedFormat') };
   }
 
   return readFromTiff(view, 0, extFormat);
@@ -55,28 +59,22 @@ export async function readShutterCount(file: File): Promise<ShutterCountResult> 
 
 function readFromRaf(view: DataView, format: RawFormat): ShutterCountResult {
   if (!isRaf(view)) {
-    return { status: 'unsupported', make: null, model: null, format, reason: 'This file is not a recognized RAF file.' };
+    return { status: 'unsupported', make: null, model: null, format, reason: msg('unrecognizedRaf') };
   }
   const tiffBase = findEmbeddedTiffBase(view);
   if (tiffBase === null) {
-    return { status: 'unsupported', make: null, model: null, format, reason: 'Could not locate embedded EXIF data in this RAF file.' };
+    return { status: 'unsupported', make: null, model: null, format, reason: msg('noExifInRaf') };
   }
   return readFromTiff(view, tiffBase, format);
 }
 
 function readFromJpeg(view: DataView, format: RawFormat): ShutterCountResult {
   if (!isJpeg(view)) {
-    return { status: 'unsupported', make: null, model: null, format, reason: 'This file is not a recognized JPEG file.' };
+    return { status: 'unsupported', make: null, model: null, format, reason: msg('unrecognizedJpeg') };
   }
   const tiffBase = findJpegTiffBase(view);
   if (tiffBase === null) {
-    return {
-      status: 'unsupported',
-      make: null,
-      model: null,
-      format,
-      reason: 'No EXIF data found in this JPEG — it may have been edited or re-saved, which typically strips MakerNote data.',
-    };
+    return { status: 'unsupported', make: null, model: null, format, reason: msg('noExifInJpeg') };
   }
   return readFromTiff(view, tiffBase, format);
 }
@@ -85,7 +83,7 @@ function readFromCanonCr3(view: DataView, format: RawFormat): ShutterCountResult
   try {
     const result = readCanonCr3(view);
     if (!result) {
-      return { status: 'unsupported', make: null, model: null, format, reason: 'Could not parse this CR3 file structure.' };
+      return { status: 'unsupported', make: null, model: null, format, reason: msg('unparseableCr3') };
     }
     const { make, model, shutterCount, dateTaken } = result;
     if (shutterCount === null) {
@@ -94,10 +92,10 @@ function readFromCanonCr3(view: DataView, format: RawFormat): ShutterCountResult
         make: make || null,
         model: model || null,
         format,
-        reason: `Shutter count extraction for "${model.trim() || 'this camera'}" is not supported yet.`,
+        reason: msg('cr3ModelNotSupported', { model: model.trim() || 'this camera' }),
       };
     }
-    return { status: 'ok', make, model, format, shutterCount, source: 'Canon CTMD track, MakerNote tag 0x000D', dateTaken };
+    return { status: 'ok', make, model, format, shutterCount, source: msg('sourceCanonCtmd'), dateTaken };
   } catch (err) {
     return { status: 'error', message: (err as Error).message };
   }
@@ -118,7 +116,7 @@ function readFromTiff(view: DataView, base: number, format: RawFormat): ShutterC
 
     const exifIfdEntry = ifd0.entries.get(TAG_EXIF_IFD_POINTER);
     if (!exifIfdEntry) {
-      return { status: 'unsupported', make: make || null, model: model || null, format, reason: 'No Exif sub-IFD found.' };
+      return { status: 'unsupported', make: make || null, model: model || null, format, reason: msg('noExifSubIfd') };
     }
     // exifIfdEntry's stored value is an offset relative to `base`, per the TIFF spec — add
     // `base` to get an absolute file position (readEntryAsUint32 only decodes the raw stored
@@ -131,56 +129,32 @@ function readFromTiff(view: DataView, base: number, format: RawFormat): ShutterC
 
     const makerNoteEntry = exifIfd.entries.get(TAG_MAKER_NOTE);
     if (!makerNoteEntry) {
-      return {
-        status: 'unsupported',
-        make: make || null,
-        model: model || null,
-        format,
-        reason: 'No MakerNote metadata found in this file.',
-      };
+      return { status: 'unsupported', make: make || null, model: model || null, format, reason: msg('noMakerNote') };
     }
     const makerNoteOffset = entryValueOffset(makerNoteEntry, base);
 
     if (/nikon/i.test(make)) {
       const count = readNikonShutterCount(view, makerNoteOffset);
       if (count === null) {
-        return {
-          status: 'unsupported',
-          make,
-          model,
-          format,
-          reason: 'Could not locate a ShutterCount tag in this Nikon MakerNote.',
-        };
+        return { status: 'unsupported', make, model, format, reason: msg('nikonNoShutterCountTag') };
       }
-      return { status: 'ok', make, model, format, shutterCount: count, source: 'Nikon MakerNote tag 0x00A7', dateTaken };
+      return { status: 'ok', make, model, format, shutterCount: count, source: msg('sourceNikonMakerNote'), dateTaken };
     }
 
     if (/sony/i.test(make)) {
       const count = readSonyShutterCount(view, base, makerNoteOffset, header.littleEndian, model);
       if (count === null) {
-        return {
-          status: 'unsupported',
-          make,
-          model,
-          format,
-          reason: `Shutter count offset for "${model.trim()}" is not yet in our supported-model table.`,
-        };
+        return { status: 'unsupported', make, model, format, reason: msg('sonyOffsetNotInTable', { model: model.trim() }) };
       }
-      return { status: 'ok', make, model, format, shutterCount: count, source: 'Sony MakerNote tag 0x9050 (deciphered)', dateTaken };
+      return { status: 'ok', make, model, format, shutterCount: count, source: msg('sourceSonyMakerNote'), dateTaken };
     }
 
     if (/fujifilm/i.test(make)) {
       const count = readFujiShutterCount(view, makerNoteOffset, header.littleEndian);
       if (count === null) {
-        return {
-          status: 'unsupported',
-          make,
-          model,
-          format,
-          reason: 'Could not locate an ImageCount tag in this Fujifilm MakerNote.',
-        };
+        return { status: 'unsupported', make, model, format, reason: msg('fujiNoImageCountTag') };
       }
-      return { status: 'ok', make, model, format, shutterCount: count, source: 'Fujifilm MakerNote tag 0x1438', dateTaken };
+      return { status: 'ok', make, model, format, shutterCount: count, source: msg('sourceFujiMakerNote'), dateTaken };
     }
 
     if (/canon/i.test(make)) {
@@ -191,13 +165,10 @@ function readFromTiff(view: DataView, base: number, format: RawFormat): ShutterC
           make,
           model,
           format,
-          reason:
-            format === 'CR2'
-              ? `Shutter count for "${model.trim()}" is not stored in-file, or isn't supported yet — only the 1D/1Ds Mark II professional bodies are currently supported for CR2.`
-              : `${make.trim()} is not supported yet.`,
+          reason: format === 'CR2' ? msg('canonCr2NotSupported', { model: model.trim() }) : msg('brandNotSupported', { make: make.trim() }),
         };
       }
-      return { status: 'ok', make, model, format, shutterCount: count, source: 'Canon MakerNote tag 0x0093 (FileInfo)', dateTaken };
+      return { status: 'ok', make, model, format, shutterCount: count, source: msg('sourceCanonFileInfo'), dateTaken };
     }
 
     return {
@@ -205,7 +176,7 @@ function readFromTiff(view: DataView, base: number, format: RawFormat): ShutterC
       make: make || null,
       model: model || null,
       format,
-      reason: `${make || 'This camera brand'} is not supported yet.`,
+      reason: msg('brandNotSupported', { make: make || 'This camera brand' }),
     };
   } catch (err) {
     return { status: 'error', message: (err as Error).message };

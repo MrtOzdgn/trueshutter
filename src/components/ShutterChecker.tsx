@@ -1,5 +1,8 @@
 import { useState, useCallback } from 'preact/hooks';
 import { readShutterCount, type ShutterCountResult } from '../engine';
+import { translateMessage } from '../i18n/messages';
+import { getUiStrings } from '../i18n/ui';
+import type { Locale } from '../i18n/config';
 
 interface FileResult {
   id: string;
@@ -7,9 +10,12 @@ interface FileResult {
   result: ShutterCountResult;
 }
 
-const SUPPORTED_FORMATS = ['NEF', 'ARW', 'CR3', 'RAF', 'DNG', 'JPEG'];
+const SUPPORTED_FORMATS = ['NEF', 'ARW', 'CR3', 'CR2', 'RAF', 'DNG', 'JPEG'];
 
-export default function ShutterChecker() {
+const LOCALE_TAGS: Record<Locale, string> = { en: 'en-US', es: 'es-ES', de: 'de-DE', fr: 'fr-FR', ja: 'ja-JP' };
+
+export default function ShutterChecker({ locale = 'en' }: { locale?: Locale }) {
+  const t = getUiStrings(locale);
   const [results, setResults] = useState<FileResult[]>([]);
   const [isDragging, setIsDragging] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -55,10 +61,10 @@ export default function ShutterChecker() {
         onDragLeave={() => setIsDragging(false)}
         onDrop={onDrop}
       >
-        <input type="file" accept=".nef,.arw,.cr3,.raf,.dng,.jpg,.jpeg" multiple onChange={onFileInput} hidden />
+        <input type="file" accept=".nef,.arw,.cr3,.cr2,.raf,.dng,.jpg,.jpeg" multiple onChange={onFileInput} hidden />
         <div class="dropzone__icon">📷</div>
-        <div class="dropzone__title">Drop RAW files here, or click to choose</div>
-        <div class="badge badge--privacy">🔒 No upload — 100% local</div>
+        <div class="dropzone__title">{t.dropzoneTitle}</div>
+        <div class="badge badge--privacy">{t.privacyBadge}</div>
         <div class="dropzone__formats">
           {SUPPORTED_FORMATS.map((f) => (
             <span class="format-chip" key={f}>
@@ -68,12 +74,12 @@ export default function ShutterChecker() {
         </div>
       </label>
 
-      {isProcessing && <div class="status-line">Reading…</div>}
+      {isProcessing && <div class="status-line">{t.reading}</div>}
 
       {results.length > 0 && (
         <div class="results">
           {results.map(({ id, fileName, result }) => (
-            <ResultRow key={id} fileName={fileName} result={result} />
+            <ResultRow key={id} fileName={fileName} result={result} locale={locale} />
           ))}
         </div>
       )}
@@ -95,13 +101,13 @@ function formatCameraName(make: string | null, model: string | null): string {
   return [trimmedMake, trimmedModel].filter(Boolean).join(' ');
 }
 
-function formatDateTaken(raw: string | null): string | null {
+function formatDateTaken(raw: string | null, localeTag: string): string | null {
   if (!raw) return null;
   const match = raw.match(/^(\d{4}):(\d{2}):(\d{2}) (\d{2}):(\d{2}):(\d{2})$/);
   if (!match) return raw;
   const [, year, month, day, hour, minute] = match;
   const date = new Date(Number(year), Number(month) - 1, Number(day), Number(hour), Number(minute));
-  return date.toLocaleString(undefined, {
+  return date.toLocaleString(localeTag, {
     year: 'numeric',
     month: 'short',
     day: 'numeric',
@@ -110,12 +116,14 @@ function formatDateTaken(raw: string | null): string | null {
   });
 }
 
-function ResultRow({ fileName, result }: { fileName: string; result: ShutterCountResult }) {
+function ResultRow({ fileName, result, locale }: { fileName: string; result: ShutterCountResult; locale: Locale }) {
+  const localeTag = LOCALE_TAGS[locale] ?? 'en-US';
+
   if (result.status === 'ok') {
-    const dateTaken = formatDateTaken(result.dateTaken);
+    const dateTaken = formatDateTaken(result.dateTaken, localeTag);
     return (
       <div class="result result--ok">
-        <div class="result__count">{result.shutterCount.toLocaleString()}</div>
+        <div class="result__count">{result.shutterCount.toLocaleString(localeTag)}</div>
         <div class="result__meta">
           <div class="result__file">{fileName}</div>
           <div class="result__camera">{formatCameraName(result.make, result.model)}</div>
@@ -132,7 +140,7 @@ function ResultRow({ fileName, result }: { fileName: string; result: ShutterCoun
         <div class="result__meta">
           <div class="result__file">{fileName}</div>
           {(result.make || result.model) && <div class="result__camera">{formatCameraName(result.make, result.model)}</div>}
-          <div class="result__source">{result.reason}</div>
+          <div class="result__source">{translateMessage(locale, result.reason)}</div>
         </div>
       </div>
     );

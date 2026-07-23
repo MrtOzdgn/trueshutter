@@ -1,33 +1,5 @@
 ---
-import ShutterChecker from '../components/ShutterChecker';
-import '../styles/global.css';
+import HomePage from '../layouts/HomePage.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta name="generator" content={Astro.generator} />
-		<meta name="description" content="Check your camera's shutter count instantly from a RAW file. Runs entirely in your browser — nothing is ever uploaded." />
-		<title>TrueShutter — Free Camera Shutter Count Checker</title>
-	</head>
-	<body>
-		<main>
-			<header class="site-header">
-				<h1>TrueShutter</h1>
-				<p>Check your camera's shutter count from a RAW file — instantly, in your browser.</p>
-			</header>
-
-			<ShutterChecker client:load />
-
-			<footer class="site-footer">
-				<p>Nikon NEF · Sony ARW · Canon CR3 · Fujifilm RAF — no tracking, no ads, no uploads.</p>
-				<p><a href={`${import.meta.env.BASE_URL}cameras`}>Browse supported cameras →</a></p>
-				<a class="coffee-link" href="https://buymeacoffee.com/mertozdogan" target="_blank" rel="noopener noreferrer">
-					☕ Buy me a coffee
-				</a>
-			</footer>
-		</main>
-	</body>
-</html>
+<HomePage locale="en" />

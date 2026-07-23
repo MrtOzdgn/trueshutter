@@ -1,0 +1,53 @@
+---
+import { locales, localeNames, defaultLocale, type Locale } from '../i18n/config';
+
+interface Props {
+  locale: Locale;
+  /** Path relative to the site root, without a locale prefix, e.g. "cameras/nikon-d40" or "" for home. */
+  path: string;
+}
+
+const { locale, path } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const cleanPath = path.replace(/^\/+/, '');
+
+function hrefFor(target: Locale): string {
+  const prefix = target === defaultLocale ? '' : `${target}/`;
+  const suffix = `${prefix}${cleanPath}`;
+  return suffix ? `${base}/${suffix}` : `${base}/`;
+}
+---
+
+<div class="lang-switcher">
+	{locales.map((l) => (
+		<a href={hrefFor(l)} class={`lang-switcher__link ${l === locale ? 'lang-switcher__link--active' : ''}`} lang={l}>
+			{localeNames[l]}
+		</a>
+	))}
+</div>
+
+<style>
+	.lang-switcher {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 0.4rem;
+		margin-top: 1rem;
+	}
+	.lang-switcher__link {
+		font-size: 0.8rem;
+		color: var(--text-dim);
+		text-decoration: none;
+		padding: 0.2rem 0.5rem;
+		border-radius: 6px;
+		border: 1px solid transparent;
+	}
+	.lang-switcher__link:hover {
+		border-color: var(--border);
+	}
+	.lang-switcher__link--active {
+		color: var(--text);
+		border-color: var(--border);
+		font-weight: 600;
+	}
+</style>

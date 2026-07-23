@@ -1,0 +1,45 @@
+---
+import ShutterChecker from '../components/ShutterChecker';
+import LanguageSwitcher from '../components/LanguageSwitcher.astro';
+import { getUiStrings } from '../i18n/ui';
+import type { Locale } from '../i18n/config';
+import '../styles/global.css';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getUiStrings(locale);
+const base = import.meta.env.BASE_URL;
+---
+
+<html lang={locale}>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content={t.metaDescription} />
+		<title>TrueShutter — Free Camera Shutter Count Checker</title>
+	</head>
+	<body>
+		<main>
+			<header class="site-header">
+				<h1>TrueShutter</h1>
+				<p>{t.siteTagline}</p>
+			</header>
+
+			<ShutterChecker client:load locale={locale} />
+
+			<footer class="site-footer">
+				<p>{t.footerFormats}</p>
+				<p><a href={`${base}${locale === 'en' ? '' : locale + '/'}cameras`}>{t.browseCameras}</a></p>
+				<a class="coffee-link" href="https://buymeacoffee.com/mertozdogan" target="_blank" rel="noopener noreferrer">
+					{t.coffeeLink}
+				</a>
+				<LanguageSwitcher locale={locale} path="" />
+			</footer>
+		</main>
+	</body>
+</html>
