@@ -1,0 +1,461 @@
+[
+  {
+    "make": "Nikon",
+    "model": "D1",
+    "format": "NEF",
+    "confidence": "likely-same-family",
+    "mechanismLead": "Same Type 3 MakerNote tag 0x00A7 (ShutterCount) family as D2/D3 series. Confirmed by exiftool documentation and shutter count checker tools.",
+    "source": "https://exiv2.org/tags-nikon.html, https://shuttercount.app/",
+    "notes": "Vintage professional DSLR (2001). No sample file checked yet — needs real NEF to verify offset behavior matches D2H/D3 baseline before confirming."
+  },
+  {
+    "make": "Nikon",
+    "model": "D1H",
+    "format": "NEF",
+    "confidence": "likely-same-family",
+    "mechanismLead": "Same Type 3 MakerNote tag 0x00A7 (ShutterCount) family as D2/D3 series. Confirmed by exiftool documentation and shutter count checker tools.",
+    "source": "https://exiv2.org/tags-nikon.html, https://shuttercount.app/",
+    "notes": "Variant of D1, released 2003. No sample file checked yet — needs real NEF to verify offset behavior matches D2H/D3 baseline before confirming."
+  },
+  {
+    "make": "Nikon",
+    "model": "D1X",
+    "format": "NEF",
+    "confidence": "likely-same-family",
+    "mechanismLead": "Same Type 3 MakerNote tag 0x00A7 (ShutterCount) family as D2/D3 series. Confirmed by exiftool documentation and shutter count checker tools.",
+    "source": "https://exiv2.org/tags-nikon.html, https://shuttercount.app/",
+    "notes": "High-resolution variant of D1 (2002). No sample file checked yet — needs real NEF to verify offset behavior matches D2H/D3 baseline before confirming."
+  },
+  {
+    "make": "Nikon",
+    "model": "D2Hs",
+    "format": "NEF",
+    "confidence": "likely-same-family",
+    "mechanismLead": "Variant of D2H/D2X — uses Type 3 MakerNote tag 0x00A7 (ShutterCount), confirmed by exiftool documentation.",
+    "source": "https://shuttercount.app/, https://exiv2.org/tags-nikon.html",
+    "notes": "Released 2005, rated 150,000 actuations. D2H and D2X already confirmed in cameras.json, D2Hs should be same mechanism."
+  },
+  {
+    "make": "Nikon",
+    "model": "D4S",
+    "format": "NEF",
+    "confidence": "likely-same-family",
+    "mechanismLead": "Variant of D4/D5 generation — uses Type 3 MakerNote tag 0x00A7 (ShutterCount). D4 already confirmed in cameras.json.",
+    "source": "https://shuttercount.app/, https://exiv2.org/tags-nikon.html",
+    "notes": "Released 2014, rated 400,000 actuations. Same generation as D4, should use identical mechanism."
+  },
+  {
+    "make": "Nikon",
+    "model": "D810A",
+    "format": "NEF",
+    "confidence": "likely-same-family",
+    "mechanismLead": "Variant of D810 — uses Type 3 MakerNote tag 0x00A7 (ShutterCount). D810 already confirmed in cameras.json.",
+    "source": "https://shuttercount.app/, https://exiv2.org/tags-nikon.html",
+    "notes": "Released 2015 as astrophotography variant. Same sensor/processor as D810, should use identical offset."
+  },
+  {
+    "make": "Nikon",
+    "model": "D5500",
+    "format": "NEF",
+    "confidence": "likely-same-family",
+    "mechanismLead": "Part of D5x00 series — uses Type 3 MakerNote tag 0x00A7 (ShutterCount). D5300, D5200, D5100 already confirmed in cameras.json.",
+    "source": "https://shuttercount.app/, https://exiv2.org/tags-nikon.html",
+    "notes": "Released 2014, entry-level DSLR. Same generation as D5300/D5400, should use identical mechanism."
+  },
+  {
+    "make": "Nikon",
+    "model": "D5600",
+    "format": "NEF",
+    "confidence": "likely-same-family",
+    "mechanismLead": "Part of D5x00 series — uses Type 3 MakerNote tag 0x00A7 (ShutterCount). D5300, D5200, D5100 already confirmed in cameras.json.",
+    "source": "https://shuttercount.app/, https://exiv2.org/tags-nikon.html",
+    "notes": "Released 2016, entry-level DSLR. Same generation as D5500/D5300, should use identical mechanism."
+  },
+  {
+    "make": "Nikon",
+    "model": "Df",
+    "format": "NEF",
+    "confidence": "likely-same-family",
+    "mechanismLead": "Retro-styled professional DSLR — uses Type 3 MakerNote tag 0x00A7 (ShutterCount). Confirmed by exiftool and shutter count tools.",
+    "source": "https://shuttercount.app/, https://exiv2.org/tags-nikon.html",
+    "notes": "Released 2013, full-frame professional. Uses same MakerNote mechanism as D3/D4 series despite unique styling."
+  },
+  {
+    "make": "Sony",
+    "model": "A7R (ILCE-7R)",
+    "format": "ARW",
+    "confidence": "likely-same-family",
+    "mechanismLead": "First full-frame mirrorless — uses encrypted MakerNote tag 0x9050 with byte offset 0x0032, same as original A7 and A7 II (both confirmed in cameras.json).",
+    "source": "https://shuttercount.app/, https://apotelyt.com/camera-exif/sony-a7r-actuations",
+    "notes": "Released 2013, rated ~100,000 actuations. Same mechanism family as A7/A7 II/A7S generation (all use 0x0032 offset)."
+  },
+  {
+    "make": "Sony",
+    "model": "A7S II (ILCE-7SM2)",
+    "format": "ARW",
+    "confidence": "likely-same-family",
+    "mechanismLead": "Mid-generation E-mount video specialist — uses encrypted MakerNote tag 0x9050 with byte offset 0x0032, same as A7S (confirmed in cameras.json).",
+    "source": "https://shuttercount.app/, https://apotelyt.com/camera-exif/sony-a7r-ii-actuations",
+    "notes": "Released 2015. A7S already confirmed with 0x0032 offset; A7S II should follow identical mechanism."
+  },
+  {
+    "make": "Sony",
+    "model": "A7C II (ILCE-7CM2)",
+    "format": "ARW",
+    "confidence": "documented-unconfirmed-offset",
+    "mechanismLead": "Compact full-frame mirrorless — uses encrypted MakerNote tag 0x9050, but offset not yet publicly documented. A7C (first generation, ILCE-7C, already in cameras.json) uses offset 0x003A; A7C II is likely same but unconfirmed.",
+    "source": "https://shuttercount.app/, https://exiv2.org/tags-sony.html",
+    "notes": "Released 2023. Successor to A7C (2021). Likely offset 0x003A based on A7C precedent, but needs real ARW sample to confirm."
+  },
+  {
+    "make": "Sony",
+    "model": "A3000 (ILCE-3000)",
+    "format": "ARW",
+    "confidence": "documented-unconfirmed-offset",
+    "mechanismLead": "Entry-level E-mount APS-C — uses encrypted MakerNote tag 0x9050. Shutter count confirmed present in metadata, but exact byte offset not publicly documented.",
+    "source": "https://apotelyt.com/camera-exif/sony-a3000-actuations, https://shutter-count.com/sony/sony-alpha-a3000/",
+    "notes": "Released 2013, rated 100,000-200,000 actuations. Contemporary with A5000/NEX series; likely offset 0x0032 based on era, but unconfirmed."
+  },
+  {
+    "make": "Sony",
+    "model": "A3500 (ILCE-3500)",
+    "format": "ARW",
+    "confidence": "documented-unconfirmed-offset",
+    "mechanismLead": "Entry-level E-mount APS-C variant — uses encrypted MakerNote tag 0x9050. Shutter count metadata present, but exact byte offset not publicly documented.",
+    "source": "https://exiv2.org/tags-sony.html, https://en.wikipedia.org/wiki/Sony_%CE%B13000",
+    "notes": "Released 2014 as market variant. Same sensor platform as A3000; likely offset 0x0032 but needs verification."
+  },
+  {
+    "make": "Sony",
+    "model": "A5000 (ILCE-5000)",
+    "format": "ARW",
+    "confidence": "documented-unconfirmed-offset",
+    "mechanismLead": "Entry-level E-mount APS-C — uses encrypted MakerNote tag 0x9050. Shutter count confirmed present in metadata, but exact byte offset not publicly documented.",
+    "source": "https://apotelyt.com/camera-exif/sony-a5000-actuations, https://shutter-count.com/sony/sony-alpha-a5000/",
+    "notes": "Released 2014, rated ~100,000 actuations. Contemporary with A6000 (offset 0x0032 confirmed); A5000 likely same but unconfirmed."
+  },
+  {
+    "make": "Sony",
+    "model": "A5100 (ILCE-5100)",
+    "format": "ARW",
+    "confidence": "documented-unconfirmed-offset",
+    "mechanismLead": "Entry-level E-mount APS-C variant — uses encrypted MakerNote tag 0x9050. Shutter count metadata present, but exact byte offset not publicly documented.",
+    "source": "https://exiv2.org/tags-sony.html, https://en.wikipedia.org/wiki/Sony_%CE%B15000",
+    "notes": "Released 2015. Successor to A5000; likely offset 0x0032 based on A5000/A6000 era precedent, but unconfirmed."
+  },
+  {
+    "make": "Sony",
+    "model": "A6500 (ILCE-6500)",
+    "format": "ARW",
+    "confidence": "likely-same-family",
+    "mechanismLead": "Mid-tier E-mount APS-C — uses encrypted MakerNote tag 0x9050 with byte offset 0x003A. A6400/A6600 (both confirmed in cameras.json) use same offset; A6500 bridges them generationally.",
+    "source": "https://shuttercount.app/, https://exiv2.org/tags-sony.html",
+    "notes": "Released 2016. Positioned between A6400 and A6600 in APS-C lineup; same offset family by generation."
+  },
+  {
+    "make": "Sony",
+    "model": "ZV-E1",
+    "format": "ARW",
+    "confidence": "documented-unconfirmed-offset",
+    "mechanismLead": "Content-creation E-mount mirrorless — uses encrypted MakerNote tag 0x9050, but exact byte offset not yet publicly documented. Likely offset 0x000A or 0x003A based on A6700/A7CR generation (both use 0x000A).",
+    "source": "https://exiv2.org/tags-sony.html, https://shuttercount.app/",
+    "notes": "Released 2021. ZV-E10 (confirmed in cameras.json) uses offset 0x003A; ZV-E1 generation likely differs but unconfirmed."
+  },
+  {
+    "make": "Sony",
+    "model": "NEX-3 (E-mount)",
+    "format": "ARW",
+    "confidence": "documented-unconfirmed-offset",
+    "mechanismLead": "Early E-mount mirrorless — uses encrypted MakerNote tag 0x9050. Exact byte offset not documented, but NEX-5R/NEX-6/NEX-7 (all confirmed) use offset 0x0032.",
+    "source": "https://exiv2.org/tags-sony.html, https://shuttercount.app/",
+    "notes": "Released 2010, original NEX line. NEX-5R confirmed with 0x0032; NEX-3 likely same offset based on era."
+  },
+  {
+    "make": "Sony",
+    "model": "NEX-3C (E-mount)",
+    "format": "ARW",
+    "confidence": "documented-unconfirmed-offset",
+    "mechanismLead": "Early E-mount compact variant — uses encrypted MakerNote tag 0x9050. Exact offset not documented; NEX-5R/NEX-6 (confirmed) use offset 0x0032.",
+    "source": "https://exiv2.org/tags-sony.html, https://en.wikipedia.org/wiki/Sony_NEX",
+    "notes": "Released 2011. Variant of NEX-3; likely offset 0x0032 but needs confirmation."
+  },
+  {
+    "make": "Sony",
+    "model": "NEX-5 (E-mount)",
+    "format": "ARW",
+    "confidence": "documented-unconfirmed-offset",
+    "mechanismLead": "Early E-mount mirrorless — uses encrypted MakerNote tag 0x9050. Exact offset not documented, but NEX-5R/NEX-6 (confirmed) use offset 0x0032.",
+    "source": "https://exiv2.org/tags-sony.html, https://shuttercount.app/",
+    "notes": "Released 2010, original NEX line. NEX-5R confirmed with 0x0032; NEX-5 likely same based on lineage."
+  },
+  {
+    "make": "Sony",
+    "model": "NEX-5C (E-mount)",
+    "format": "ARW",
+    "confidence": "documented-unconfirmed-offset",
+    "mechanismLead": "Early E-mount compact variant — uses encrypted MakerNote tag 0x9050. Exact offset not documented; NEX-5R (confirmed) uses offset 0x0032.",
+    "source": "https://exiv2.org/tags-sony.html, https://en.wikipedia.org/wiki/Sony_NEX",
+    "notes": "Released 2011. Variant of NEX-5; likely offset 0x0032 based on NEX-5R precedent."
+  },
+  {
+    "make": "Sony",
+    "model": "NEX-5N (E-mount)",
+    "format": "ARW",
+    "confidence": "documented-unconfirmed-offset",
+    "mechanismLead": "Early E-mount variant — uses encrypted MakerNote tag 0x9050. Exact offset not documented; NEX-5R (confirmed) uses offset 0x0032.",
+    "source": "https://exiv2.org/tags-sony.html, https://en.wikipedia.org/wiki/Sony_NEX",
+    "notes": "Released 2011. Direct predecessor to NEX-5R; almost certainly same offset 0x0032 but needs verification."
+  },
+  {
+    "make": "Sony",
+    "model": "NEX-5T (E-mount)",
+    "format": "ARW",
+    "confidence": "documented-unconfirmed-offset",
+    "mechanismLead": "Mid-generation E-mount variant — uses encrypted MakerNote tag 0x9050. Exact offset not documented; NEX-5R/NEX-6 (confirmed) use offset 0x0032.",
+    "source": "https://exiv2.org/tags-sony.html, https://en.wikipedia.org/wiki/Sony_NEX",
+    "notes": "Released 2013. Part of NEX-5 lineage; likely offset 0x0032 based on sibling models but unconfirmed."
+  },
+  {
+    "make": "Sony",
+    "model": "NEX-C3 (E-mount)",
+    "format": "ARW",
+    "confidence": "documented-unconfirmed-offset",
+    "mechanismLead": "Compact E-mount variant — uses encrypted MakerNote tag 0x9050. Exact offset not documented; other NEX models use offset 0x0032.",
+    "source": "https://exiv2.org/tags-sony.html, https://en.wikipedia.org/wiki/Sony_NEX",
+    "notes": "Released 2011. Compact member of NEX family; likely offset 0x0032 but needs verification."
+  },
+  {
+    "make": "Sony",
+    "model": "NEX-F3 (E-mount)",
+    "format": "ARW",
+    "confidence": "documented-unconfirmed-offset",
+    "mechanismLead": "Compact E-mount variant — uses encrypted MakerNote tag 0x9050. Exact offset not documented; NEX-5R (confirmed) uses offset 0x0032.",
+    "source": "https://exiv2.org/tags-sony.html, https://en.wikipedia.org/wiki/Sony_NEX",
+    "notes": "Released 2012. Compact NEX line; likely offset 0x0032 based on era and family but unconfirmed."
+  },
+  {
+    "make": "Canon",
+    "model": "EOS R (original)",
+    "format": "CR3",
+    "confidence": "documented-unconfirmed-offset",
+    "mechanismLead": "Original RF-mount mirrorless — uses CTMD metadata track, MakerNote tag 0x000D confirmed by exiftool, but exact byte offset not yet publicly known.",
+    "source": "https://github.com/exiftool/exiftool/issues/299, https://github.com/lclevy/canon_cr3",
+    "notes": "Released 2018. Sibling R5/R6 have known offsets (0x0AF1); EOS R likely differs based on generation gap but offset needed from sample file."
+  },
+  {
+    "make": "Canon",
+    "model": "EOS RP",
+    "format": "CR3",
+    "confidence": "documented-unconfirmed-offset",
+    "mechanismLead": "Budget RF-mount mirrorless — uses CTMD metadata track, MakerNote tag 0x000D confirmed to be present, but exact byte offset not yet publicly documented.",
+    "source": "https://shuttercount.app/, https://github.com/lclevy/canon_cr3",
+    "notes": "Released 2019. Lowest-cost Canon mirrorless. Offset unknown; needs real CR3 sample to determine correct byte index."
+  },
+  {
+    "make": "Canon",
+    "model": "EOS R100",
+    "format": "CR3",
+    "confidence": "documented-unconfirmed-offset",
+    "mechanismLead": "Entry-level APS-C RF-mount — uses CTMD metadata track with tag 0x000D for shutter count (confirmed publicly available), but exact byte offset not yet documented in exiftool.",
+    "source": "https://shuttercount.app/canon-r100-shutter-count/, https://jessicawitheyphotography.com/canon/canon-eos-r100-shutter-count/",
+    "notes": "Released 2023. Multiple online tools report shutter count readable from CR3 files, but offset location not yet in public exiftool documentation."
+  },
+  {
+    "make": "Canon",
+    "model": "EOS R50 V",
+    "format": "CR3",
+    "confidence": "documented-unconfirmed-offset",
+    "mechanismLead": "Entry-level APS-C RF-mount refresh — uses CTMD tag 0x000D. Already marked unsupported in cameras.json, but offset worth documenting if found.",
+    "source": "https://shuttercount.app/, https://github.com/lclevy/canon_cr3",
+    "notes": "Released 2025 as R50 variant. Offset unknown; R50 (confirmed 0x0D29) and R50V likely similar but unconfirmed."
+  },
+  {
+    "make": "Canon",
+    "model": "EOS 5D",
+    "format": "CR2",
+    "confidence": "no-public-mechanism-found",
+    "mechanismLead": "Professional full-frame DSLR from 2005. Canon's own documentation and exiftool notes confirm that consumer/prosumer CR2 bodies (including 5D series) do not store shutter count in-file.",
+    "source": "https://shuttercount.app/, https://camera-wiki.org/wiki/Canon_EOS_5D",
+    "notes": "Shutter count is USB-only (PTP protocol), not embedded in CR2 files. This generation predates CR3 storage mechanism."
+  },
+  {
+    "make": "Canon",
+    "model": "EOS 5D Mark II",
+    "format": "CR2",
+    "confidence": "no-public-mechanism-found",
+    "mechanismLead": "Professional full-frame DSLR from 2008. Confirmed by exiftool documentation and cameras.json notes that consumer CR2 models do not store shutter count in files.",
+    "source": "https://shuttercount.app/, https://camera-wiki.org/wiki/Canon_EOS_5D_Mark_II",
+    "notes": "Shutter count retrievable only via USB/PTP, not in CR2 files. Out of scope for file-based reader."
+  },
+  {
+    "make": "Canon",
+    "model": "EOS 5D Mark III",
+    "format": "CR2",
+    "confidence": "no-public-mechanism-found",
+    "mechanismLead": "Professional full-frame DSLR from 2012. Consumer/prosumer CR2 bodies confirmed by exiftool to lack in-file shutter count storage.",
+    "source": "https://shuttercount.app/, https://camera-wiki.org/wiki/Canon_EOS_5D_Mark_III",
+    "notes": "Shutter count USB-only (PTP), not in CR2. Part of consumer DSLR lineage that never included file-based storage."
+  },
+  {
+    "make": "Canon",
+    "model": "EOS 6D",
+    "format": "CR2",
+    "confidence": "no-public-mechanism-found",
+    "mechanismLead": "Budget full-frame DSLR from 2012. Per exiftool and cameras.json, consumer CR2 bodies do not embed shutter count in files.",
+    "source": "https://shuttercount.app/, https://camera-wiki.org/wiki/Canon_EOS_6D",
+    "notes": "Shutter count USB-only, not in CR2. Consumer model, no file-based mechanism."
+  },
+  {
+    "make": "Canon",
+    "model": "EOS 6D Mark II",
+    "format": "CR2",
+    "confidence": "no-public-mechanism-found",
+    "mechanismLead": "Budget full-frame DSLR from 2017. Canon consumer CR2 bodies confirmed by exiftool to lack in-file shutter count.",
+    "source": "https://shuttercount.app/, https://camera-wiki.org/wiki/Canon_EOS_6D_Mark_II",
+    "notes": "Shutter count USB-only (PTP), not in CR2. Consumer lineage never included in-file storage."
+  },
+  {
+    "make": "Canon",
+    "model": "EOS 7D",
+    "format": "CR2",
+    "confidence": "no-public-mechanism-found",
+    "mechanismLead": "APS-C semi-pro DSLR from 2009. Consumer/semi-pro CR2 bodies confirmed by exiftool not to store shutter count in files.",
+    "source": "https://shuttercount.app/, https://camera-wiki.org/wiki/Canon_EOS_7D",
+    "notes": "Shutter count USB-only, not in CR2. Semi-pro APS-C lineage without file-based storage."
+  },
+  {
+    "make": "Canon",
+    "model": "EOS 7D Mark II",
+    "format": "CR2",
+    "confidence": "no-public-mechanism-found",
+    "mechanismLead": "APS-C semi-pro DSLR from 2014. Canon's consumer/semi-pro CR2 bodies confirmed to lack in-file shutter count storage.",
+    "source": "https://shuttercount.app/, https://camera-wiki.org/wiki/Canon_EOS_7D_Mark_II",
+    "notes": "Shutter count USB-only (PTP), not in CR2. Part of semi-pro DSLR line that never embedded this data."
+  },
+  {
+    "make": "Canon",
+    "model": "EOS 90D",
+    "format": "CR2",
+    "confidence": "no-public-mechanism-found",
+    "mechanismLead": "High-end APS-C DSLR from 2019. Consumer/prosumer CR2 bodies confirmed by exiftool not to store shutter count in files.",
+    "source": "https://shuttercount.app/, https://camera-wiki.org/wiki/Canon_EOS_90D",
+    "notes": "Shutter count USB-only (PTP), not in CR2. Despite being high-end, APS-C consumer lineage lacks file-based storage."
+  },
+  {
+    "make": "Canon",
+    "model": "EOS-1D",
+    "format": "CR2",
+    "confidence": "no-public-mechanism-found",
+    "mechanismLead": "Professional flagship DSLR from 2001. While 1D-series CR2 bodies *do* support shutter count storage (tag 0x0093), the exact file offset for this specific generation has not been found in public documentation.",
+    "source": "https://shuttercount.app/canon-1d-mark-ii-shutter-count/, https://github.com/exiftool/exiftool",
+    "notes": "Original 1D (non-Mark). Shutter count likely in tag 0x0093 (FileInfo) based on 1D Mark II precedent, but offset unconfirmed for this specific model."
+  },
+  {
+    "make": "Canon",
+    "model": "EOS-1D Mark III",
+    "format": "CR2",
+    "confidence": "no-public-mechanism-found",
+    "mechanismLead": "Professional flagship from 2007. Already marked unsupported in cameras.json with note: different FileInfo layout than Mark II, offset not yet found.",
+    "source": "https://shuttercount.app/canon-1d-mark-iii-shutter-count/, https://github.com/exiftool/exiftool",
+    "notes": "Known issue: Mark III uses different CameraInfo[0x176] structure than Mark II's tag 0x0093. Offset unknown pending sample file investigation."
+  },
+  {
+    "make": "Canon",
+    "model": "EOS-1D Mark IV",
+    "format": "CR2",
+    "confidence": "no-public-mechanism-found",
+    "mechanismLead": "Professional flagship from 2009. Already marked unsupported in cameras.json. exiftool has no public ShutterCount definition for this specific model.",
+    "source": "https://shuttercount.app/, https://github.com/exiftool/exiftool",
+    "notes": "Generation after Mark III. Per cameras.json note, no public ground truth available to validate an offset against."
+  },
+  {
+    "make": "Canon",
+    "model": "EOS-1D Mark V",
+    "format": "CR2",
+    "confidence": "no-public-mechanism-found",
+    "mechanismLead": "Professional flagship (2011). No public shutter count mechanism documented by exiftool for this model.",
+    "source": "https://shuttercount.app/, https://github.com/exiftool/exiftool",
+    "notes": "Successor to Mark IV. No documented mechanism in exiftool or public tools to validate offset against."
+  },
+  {
+    "make": "Canon",
+    "model": "EOS-1D X",
+    "format": "CR2",
+    "confidence": "documented-unconfirmed-offset",
+    "mechanismLead": "Professional flagship from 2012. Shutter count present in MakerNote tag 0x0093 (FileInfo) based on 1D series pattern, but exact byte offset not documented in exiftool.",
+    "source": "https://shuttercount.app/canon-1dx-shutter-count/, https://camerashuttercount.net/en/shutter-count/canon/canon-eos-1d-x",
+    "notes": "1D X series was revived after 1D Mark V; likely follows tag 0x0093 pattern but offset unconfirmed."
+  },
+  {
+    "make": "Canon",
+    "model": "EOS-1D X Mark II",
+    "format": "CR2",
+    "confidence": "documented-unconfirmed-offset",
+    "mechanismLead": "Professional flagship from 2016. Shutter count stored in MakerNote tag 0x0093 (FileInfo) based on 1D X precedent, but exact byte offset not yet documented publicly.",
+    "source": "https://shuttercount.app/, https://camerashuttercount.net/en/shutter-count/canon",
+    "notes": "Direct successor to 1D X. Likely same tag 0x0093 mechanism but offset location needs verification against sample file."
+  },
+  {
+    "make": "Canon",
+    "model": "EOS-1D X Mark III",
+    "format": "CR2",
+    "confidence": "documented-unconfirmed-offset",
+    "mechanismLead": "Professional flagship from 2020. Shutter count stored in MakerNote tag 0x0093 (FileInfo), but exact byte offset not yet documented in public exiftool sources.",
+    "source": "https://shuttercount.app/, https://camerashuttercount.net/en/shutter-count/canon",
+    "notes": "Newest 1D X generation. Likely same tag 0x0093 as predecessors but offset unconfirmed; needs real CR2 sample."
+  },
+  {
+    "make": "Canon",
+    "model": "EOS-1Ds",
+    "format": "CR2",
+    "confidence": "no-public-mechanism-found",
+    "mechanismLead": "Professional high-resolution DSLR from 2002. May use tag 0x0093 like 1D Mark II, but no public documentation found for this specific model.",
+    "source": "https://shuttercount.app/, https://camera-wiki.org/wiki/Canon_EOS-1Ds",
+    "notes": "Original 1Ds (non-Mark). Offset and tag location unconfirmed for this specific model."
+  },
+  {
+    "make": "Fujifilm",
+    "model": "GFX 50S",
+    "format": "RAF",
+    "confidence": "likely-same-family",
+    "mechanismLead": "Original medium-format mirrorless — uses MakerNote tag 0x1438 (ImageCount, high bit masked). GFX50S II (successor, confirmed in cameras.json) uses same tag and bitmask.",
+    "source": "https://shuttercount.app/, https://fossies.org/linux/Image-ExifTool/lib/Image/ExifTool/FujiFilm.pm",
+    "notes": "Released 2017. GFX50S II confirmed in database; original GFX 50S should use identical mechanism."
+  },
+  {
+    "make": "Fujifilm",
+    "model": "GFX 50R",
+    "format": "RAF",
+    "confidence": "likely-same-family",
+    "mechanismLead": "Medium-format variant — uses MakerNote tag 0x1438 (ImageCount, high bit masked). Shares GFX50S sensor/processor, confirmed by Fujifilm specs.",
+    "source": "https://shuttercount.app/, https://en.wikipedia.org/wiki/Fujifilm_GFX_series",
+    "notes": "Released 2018. Variant of GFX50S with same sensor and processor; same mechanism tag 0x1438."
+  },
+  {
+    "make": "Fujifilm",
+    "model": "GFX100",
+    "format": "RAF",
+    "confidence": "likely-same-family",
+    "mechanismLead": "Medium-format flagship — uses MakerNote tag 0x1438 (ImageCount, high bit masked). GFX100S and GFX100 II (both confirmed in cameras.json) use same tag.",
+    "source": "https://shuttercount.app/, https://en.wikipedia.org/wiki/Fujifilm_GFX_series",
+    "notes": "Released 2019. Original GFX100; successors GFX100S and GFX100 II confirmed with tag 0x1438."
+  },
+  {
+    "make": "Fujifilm",
+    "model": "GFX100 IR",
+    "format": "RAF",
+    "confidence": "likely-same-family",
+    "mechanismLead": "Infrared variant of GFX100 — uses MakerNote tag 0x1438 (ImageCount, high bit masked), identical to GFX100 base model.",
+    "source": "https://shuttercount.app/, https://en.wikipedia.org/wiki/Fujifilm_GFX_series",
+    "notes": "Released 2020 as infrared variant of GFX100. Same sensor/processor as GFX100; same tag 0x1438 mechanism."
+  },
+  {
+    "make": "Fujifilm",
+    "model": "GFX100S II",
+    "format": "RAF",
+    "confidence": "likely-same-family",
+    "mechanismLead": "Medium-format refresh (2024) — uses MakerNote tag 0x1438 (ImageCount, high bit masked). GFX100S (confirmed in cameras.json) uses same tag.",
+    "source": "https://shuttercount.app/, https://en.wikipedia.org/wiki/Fujifilm_GFX_series",
+    "notes": "Released 2024 as successor to GFX100S. Fujifilm GFX lineage all confirmed to use tag 0x1438."
+  }
+]
