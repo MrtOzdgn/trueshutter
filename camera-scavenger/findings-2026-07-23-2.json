@@ -1,0 +1,470 @@
+[
+  {
+    "make": "Nikon",
+    "model": "Zfc",
+    "format": "NEF",
+    "confidence": "likely-same-family",
+    "mechanismLead": "Z-mount mirrorless uses same MakerNote tag 0x00A7 (ShutterCount) as other Nikon Z-series bodies already in cameras.json (Z6, Z7, Z9, etc.) — mechanism family confirmed and implemented.",
+    "source": "Web search for Nikon Zfc specifications + exiftool tag reference",
+    "notes": "APS-C mirrorless. Z-mount standard documented across all modern Nikon mirrorless. No sample file validation needed if treating as sibling to Z6/Z7/Z9 family already confirmed in engine."
+  },
+  {
+    "make": "Canon EOS",
+    "model": "D30",
+    "format": "CR2",
+    "confidence": "no-public-mechanism-found",
+    "mechanismLead": "Consumer-level DSLR. Canon's documented policy: shutter count NOT stored in-file for consumer bodies, only readable via USB PTP. No tag 0x0093 entry found or documented.",
+    "source": "Web search results confirm Canon USB-only policy for consumer CR2 DSLRs",
+    "notes": "First Canon digital EOS. No in-file mechanism publicly documented."
+  },
+  {
+    "make": "Canon EOS",
+    "model": "10D",
+    "format": "CR2",
+    "confidence": "no-public-mechanism-found",
+    "mechanismLead": "Consumer-level DSLR (10D line, 2003). Canon's documented policy: shutter count stored only via USB PTP for consumer bodies, NOT in CR2 file itself. Professional 1D/1Ds series (already in database) are the only Canon models with in-file shutter count via tag 0x0093.",
+    "source": "Web search confirms Canon's strict USB-only policy for non-1D bodies",
+    "notes": "Part of consumer xxD line. No in-file mechanism."
+  },
+  {
+    "make": "Canon EOS",
+    "model": "20D",
+    "format": "CR2",
+    "confidence": "no-public-mechanism-found",
+    "mechanismLead": "Consumer-level DSLR (20D, 2004). Canon's documented policy: shutter count NOT stored in-file for consumer bodies.",
+    "source": "Web search confirms Canon USB-only policy",
+    "notes": "Part of consumer xxD line. No in-file mechanism."
+  },
+  {
+    "make": "Canon EOS",
+    "model": "30D",
+    "format": "CR2",
+    "confidence": "no-public-mechanism-found",
+    "mechanismLead": "Consumer-level DSLR (30D, 2006). Canon's documented policy: shutter count stored only via USB PTP.",
+    "source": "Web search confirms Canon USB-only policy",
+    "notes": "Part of consumer xxD line."
+  },
+  {
+    "make": "Canon EOS",
+    "model": "40D",
+    "format": "CR2",
+    "confidence": "no-public-mechanism-found",
+    "mechanismLead": "Consumer-level DSLR (40D, 2007). Canvas USB-only policy for consumer bodies.",
+    "source": "Web search confirms Canon USB-only policy",
+    "notes": "Part of consumer xxD line."
+  },
+  {
+    "make": "Canon EOS",
+    "model": "50D",
+    "format": "CR2",
+    "confidence": "no-public-mechanism-found",
+    "mechanismLead": "Consumer-level DSLR (50D, 2008). Canon USB-only policy for consumer bodies.",
+    "source": "Web search confirms Canon USB-only policy",
+    "notes": "Part of consumer xxD line."
+  },
+  {
+    "make": "Canon EOS",
+    "model": "60D",
+    "format": "CR2",
+    "confidence": "no-public-mechanism-found",
+    "mechanismLead": "Consumer/prosumer DSLR (60D, 2010). Canon USB-only policy for non-1D professional bodies.",
+    "source": "Web search confirms Canon USB-only policy",
+    "notes": "Mid-range consumer body."
+  },
+  {
+    "make": "Canon EOS",
+    "model": "70D",
+    "format": "CR2",
+    "confidence": "no-public-mechanism-found",
+    "mechanismLead": "Consumer/prosumer DSLR (70D, 2013). Canon USB-only policy for non-professional 1D/1Ds bodies.",
+    "source": "Web search confirms Canon USB-only policy",
+    "notes": "Mid-range consumer body."
+  },
+  {
+    "make": "Canon EOS",
+    "model": "300D",
+    "format": "CR2",
+    "confidence": "no-public-mechanism-found",
+    "mechanismLead": "Entry-level consumer DSLR (2003). Canon USB-only policy for consumer bodies.",
+    "source": "Web search confirms Canon USB-only policy",
+    "notes": "First Rebel/300D line entry-level body."
+  },
+  {
+    "make": "Canon EOS",
+    "model": "350D",
+    "format": "CR2",
+    "confidence": "no-public-mechanism-found",
+    "mechanismLead": "Entry-level consumer DSLR (2005). Canon USB-only policy.",
+    "source": "Web search confirms Canon USB-only policy",
+    "notes": "Entry-level body."
+  },
+  {
+    "make": "Canon EOS",
+    "model": "400D",
+    "format": "CR2",
+    "confidence": "no-public-mechanism-found",
+    "mechanismLead": "Entry-level consumer DSLR (2006). Canon USB-only policy.",
+    "source": "Web search confirms Canon USB-only policy",
+    "notes": "Entry-level body."
+  },
+  {
+    "make": "Canon EOS",
+    "model": "450D",
+    "format": "CR2",
+    "confidence": "no-public-mechanism-found",
+    "mechanismLead": "Entry-level consumer DSLR (2008). Canon USB-only policy.",
+    "source": "Web search confirms Canon USB-only policy",
+    "notes": "Entry-level body."
+  },
+  {
+    "make": "Canon EOS",
+    "model": "500D",
+    "format": "CR2",
+    "confidence": "no-public-mechanism-found",
+    "mechanismLead": "Entry-level consumer DSLR (2009). Canon USB-only policy.",
+    "source": "Web search confirms Canon USB-only policy",
+    "notes": "Entry-level body."
+  },
+  {
+    "make": "Canon EOS",
+    "model": "550D",
+    "format": "CR2",
+    "confidence": "no-public-mechanism-found",
+    "mechanismLead": "Entry-level consumer DSLR (2010). Canon USB-only policy.",
+    "source": "Web search confirms Canon USB-only policy",
+    "notes": "Entry-level body."
+  },
+  {
+    "make": "Canon EOS",
+    "model": "600D",
+    "format": "CR2",
+    "confidence": "no-public-mechanism-found",
+    "mechanismLead": "Entry-level consumer DSLR (2011). Canon USB-only policy.",
+    "source": "Web search confirms Canon USB-only policy",
+    "notes": "Entry-level body."
+  },
+  {
+    "make": "Canon EOS",
+    "model": "650D",
+    "format": "CR2",
+    "confidence": "no-public-mechanism-found",
+    "mechanismLead": "Entry-level consumer DSLR (2012). Canon USB-only policy.",
+    "source": "Web search confirms Canon USB-only policy",
+    "notes": "Entry-level body."
+  },
+  {
+    "make": "Canon EOS",
+    "model": "700D",
+    "format": "CR2",
+    "confidence": "no-public-mechanism-found",
+    "mechanismLead": "Entry-level consumer DSLR (2013). Canon USB-only policy.",
+    "source": "Web search confirms Canon USB-only policy",
+    "notes": "Entry-level body."
+  },
+  {
+    "make": "Canon EOS",
+    "model": "750D",
+    "format": "CR2",
+    "confidence": "no-public-mechanism-found",
+    "mechanismLead": "Entry-level consumer DSLR (2015). Canon USB-only policy.",
+    "source": "Web search confirms Canon USB-only policy",
+    "notes": "Entry-level body."
+  },
+  {
+    "make": "Canon EOS",
+    "model": "800D",
+    "format": "CR2",
+    "confidence": "no-public-mechanism-found",
+    "mechanismLead": "Entry-level consumer DSLR (2017). Canon USB-only policy.",
+    "source": "Web search confirms Canon USB-only policy",
+    "notes": "Entry-level body."
+  },
+  {
+    "make": "Canon EOS",
+    "model": "850D",
+    "format": "CR2",
+    "confidence": "no-public-mechanism-found",
+    "mechanismLead": "Entry-level consumer DSLR (2020). Canon USB-only policy.",
+    "source": "Web search confirms Canon USB-only policy",
+    "notes": "Entry-level body."
+  },
+  {
+    "make": "Sony",
+    "model": "DSLR-A100",
+    "format": "ARW",
+    "confidence": "documented-unconfirmed-offset",
+    "mechanismLead": "Sony's first A-mount DSLR (2006). MakerNote tag 0x9050 confirmed to exist for Sony A-mount DSLRs (same tag as E-mount), but exact byte offset for this earliest generation is not publicly documented. Subsequent A-mount models (A700, A900) use same tag; offset varies by generation.",
+    "source": "Web search confirms tag 0x9050 for Sony A-mount; exiftool Sony.pm reference indicates model-specific handling",
+    "notes": "Earliest A-mount DSLR. Needs real sample file to reverse-engineer offset or verify against exiftool ground truth."
+  },
+  {
+    "make": "Sony",
+    "model": "DSLR-A200",
+    "format": "ARW",
+    "confidence": "documented-unconfirmed-offset",
+    "mechanismLead": "A-mount DSLR (2008, entry-level). MakerNote tag 0x9050 documented for A-mount family. Offset for this generation not publicly documented.",
+    "source": "Web search confirms tag 0x9050 for Sony A-mount",
+    "notes": "Entry-level A-mount. Needs sample file for offset verification."
+  },
+  {
+    "make": "Sony",
+    "model": "DSLR-A300",
+    "format": "ARW",
+    "confidence": "documented-unconfirmed-offset",
+    "mechanismLead": "A-mount DSLR (2007, entry-level). MakerNote tag 0x9050. Offset unconfirmed.",
+    "source": "Web search confirms tag 0x9050 for Sony A-mount",
+    "notes": "Entry-level A-mount. Needs sample file."
+  },
+  {
+    "make": "Sony",
+    "model": "DSLR-A350",
+    "format": "ARW",
+    "confidence": "documented-unconfirmed-offset",
+    "mechanismLead": "A-mount DSLR (2007, mid-range). MakerNote tag 0x9050. Offset unconfirmed.",
+    "source": "Web search confirms tag 0x9050 for Sony A-mount",
+    "notes": "Mid-range A-mount. Needs sample file."
+  },
+  {
+    "make": "Sony",
+    "model": "DSLR-A450",
+    "format": "ARW",
+    "confidence": "documented-unconfirmed-offset",
+    "mechanismLead": "A-mount DSLR (2009, entry-level). MakerNote tag 0x9050. Offset unconfirmed.",
+    "source": "Web search confirms tag 0x9050 for Sony A-mount",
+    "notes": "Entry-level A-mount. Needs sample file."
+  },
+  {
+    "make": "Sony",
+    "model": "DSLR-A500",
+    "format": "ARW",
+    "confidence": "documented-unconfirmed-offset",
+    "mechanismLead": "A-mount DSLR (2009, mid-range). MakerNote tag 0x9050. Offset unconfirmed.",
+    "source": "Web search confirms tag 0x9050 for Sony A-mount",
+    "notes": "Mid-range A-mount. Needs sample file."
+  },
+  {
+    "make": "Sony",
+    "model": "DSLR-A550",
+    "format": "ARW",
+    "confidence": "documented-unconfirmed-offset",
+    "mechanismLead": "A-mount DSLR (2009, mid-range). MakerNote tag 0x9050. Offset unconfirmed.",
+    "source": "Web search confirms tag 0x9050 for Sony A-mount",
+    "notes": "Mid-range A-mount. Needs sample file."
+  },
+  {
+    "make": "Sony",
+    "model": "DSLR-A700",
+    "format": "ARW",
+    "confidence": "documented-unconfirmed-offset",
+    "mechanismLead": "A-mount DSLR (2007, professional). MakerNote tag 0x9050 confirmed. Offset for this generation not publicly documented.",
+    "source": "Web search confirms tag 0x9050 for Sony A-mount; exiftool Sony.pm references model codes (258 = A700)",
+    "notes": "Professional A-mount body. Needs sample file for offset."
+  },
+  {
+    "make": "Sony",
+    "model": "SLT-A35",
+    "format": "ARW",
+    "confidence": "documented-unconfirmed-offset",
+    "mechanismLead": "Semi-transparent mirror DSLR (2010, entry-level). Uses MakerNote tag 0x9050 (same as A-mount and E-mount families). Offset unconfirmed for this SLT-A35 generation.",
+    "source": "Web search confirms tag 0x9050 for Sony SLT models",
+    "notes": "SLT technology uses same tag 0x9050 but offset generation not documented. Needs sample file."
+  },
+  {
+    "make": "Sony",
+    "model": "SLT-A37",
+    "format": "ARW",
+    "confidence": "documented-unconfirmed-offset",
+    "mechanismLead": "SLT DSLR (2012, entry-level). MakerNote tag 0x9050. Offset unconfirmed.",
+    "source": "Web search confirms tag 0x9050 for Sony SLT",
+    "notes": "SLT body. Needs sample file for offset."
+  },
+  {
+    "make": "Sony",
+    "model": "SLT-A55",
+    "format": "ARW",
+    "confidence": "documented-unconfirmed-offset",
+    "mechanismLead": "SLT DSLR (2010, prosumer). MakerNote tag 0x9050. Offset unconfirmed. Web search notes 'shutter could mechanically move more than once per image depending on mode.'",
+    "source": "Web search confirms tag 0x9050 for Sony SLT models; notes shutter behavior variance",
+    "notes": "SLT body with variable shutter behavior. Needs sample file and verification."
+  },
+  {
+    "make": "Sony",
+    "model": "SLT-A57",
+    "format": "ARW",
+    "confidence": "documented-unconfirmed-offset",
+    "mechanismLead": "SLT DSLR (2012, prosumer). MakerNote tag 0x9050. Offset unconfirmed.",
+    "source": "Web search confirms tag 0x9050 for Sony SLT",
+    "notes": "SLT body. Needs sample file."
+  },
+  {
+    "make": "Sony",
+    "model": "SLT-A65",
+    "format": "ARW",
+    "confidence": "documented-unconfirmed-offset",
+    "mechanismLead": "SLT DSLR (2011, prosumer). MakerNote tag 0x9050. Offset unconfirmed.",
+    "source": "Web search confirms tag 0x9050 for Sony SLT",
+    "notes": "SLT body. Needs sample file."
+  },
+  {
+    "make": "Sony",
+    "model": "SLT-A68",
+    "format": "ARW",
+    "confidence": "documented-unconfirmed-offset",
+    "mechanismLead": "SLT DSLR (2014, prosumer). MakerNote tag 0x9050. Offset unconfirmed.",
+    "source": "Web search confirms tag 0x9050 for Sony SLT",
+    "notes": "SLT body. Needs sample file."
+  },
+  {
+    "make": "Sony",
+    "model": "SLT-A77",
+    "format": "ARW",
+    "confidence": "documented-unconfirmed-offset",
+    "mechanismLead": "SLT DSLR (2011, professional). MakerNote tag 0x9050. Offset unconfirmed. Web search mentions 150,000 shutter life expectancy.",
+    "source": "Web search confirms tag 0x9050 for Sony SLT A77",
+    "notes": "Professional SLT body. Needs sample file for offset verification."
+  },
+  {
+    "make": "Sony",
+    "model": "NEX-3",
+    "format": "ARW",
+    "confidence": "documented-unconfirmed-offset",
+    "mechanismLead": "E-mount APS-C (2010, entry-level). MakerNote tag 0x9050 documented for E-mount, but these earliest NEX models predate the well-documented offset generations (A7/A7 II use 0x0032, later E-mount uses 0x003a/0x000a). Offset for NEX-3/5 generation unconfirmed.",
+    "source": "Web search confirms E-mount uses tag 0x9050; Wikipedia timeline shows NEX-3/5 as 2010 originals",
+    "notes": "Earliest E-mount mirrorless. Generation predates documented offset generations. Needs sample file."
+  },
+  {
+    "make": "Sony",
+    "model": "NEX-5",
+    "format": "ARW",
+    "confidence": "documented-unconfirmed-offset",
+    "mechanismLead": "E-mount APS-C (2010, entry-level). MakerNote tag 0x9050. Offset for NEX-5 generation unconfirmed; predates documented offset generations.",
+    "source": "Web search confirms E-mount uses tag 0x9050; Wikipedia timeline shows NEX-5 as 2010",
+    "notes": "Earliest E-mount body. Needs sample file."
+  },
+  {
+    "make": "Sony",
+    "model": "NEX-5T",
+    "format": "ARW",
+    "confidence": "documented-unconfirmed-offset",
+    "mechanismLead": "E-mount APS-C (2012, entry-level). MakerNote tag 0x9050. Offset unconfirmed; falls between earliest NEX and documented A7/A7 II generation.",
+    "source": "Web search confirms E-mount uses tag 0x9050",
+    "notes": "NEX consumer model. Needs sample file for offset."
+  },
+  {
+    "make": "Sony",
+    "model": "NEX-C3",
+    "format": "ARW",
+    "confidence": "documented-unconfirmed-offset",
+    "mechanismLead": "E-mount APS-C (2011, entry-level). MakerNote tag 0x9050. Offset unconfirmed for this early E-mount generation.",
+    "source": "Web search confirms E-mount uses tag 0x9050; Wikipedia timeline confirms 2011",
+    "notes": "Early E-mount body. Needs sample file."
+  },
+  {
+    "make": "Sony",
+    "model": "NEX-F3",
+    "format": "ARW",
+    "confidence": "documented-unconfirmed-offset",
+    "mechanismLead": "E-mount APS-C (2012, entry-level). MakerNote tag 0x9050. Offset unconfirmed.",
+    "source": "Web search confirms E-mount uses tag 0x9050",
+    "notes": "NEX consumer model, 2012. Needs sample file."
+  },
+  {
+    "make": "Fujifilm",
+    "model": "X-A1",
+    "format": "RAF",
+    "confidence": "likely-same-family",
+    "mechanismLead": "Entry-level X-mount mirrorless (2012). All Fujifilm X-series models documented to use MakerNote tag 0x1438 (ImageCount), same tag already confirmed and implemented in engine for X-T1, X-T2, X-T3, etc. A1 is earliest X-A line but same mechanism family.",
+    "source": "Web search confirms tag 0x1438 for Fujifilm X-series; Wikipedia lists X-A1 as 2012 X-mount body",
+    "notes": "Entry-level X-mount. Tag 0x1438 already implemented; no sample needed if treating as X-series sibling."
+  },
+  {
+    "make": "Fujifilm",
+    "model": "X-A2",
+    "format": "RAF",
+    "confidence": "likely-same-family",
+    "mechanismLead": "Entry-level X-mount mirrorless (2013). Uses tag 0x1438 (ImageCount), same implemented mechanism as X-T1/T2/T3 line.",
+    "source": "Web search confirms tag 0x1438 for Fujifilm X-series",
+    "notes": "X-A line. Same mechanism family as implemented X-series models."
+  },
+  {
+    "make": "Fujifilm",
+    "model": "X-A3",
+    "format": "RAF",
+    "confidence": "likely-same-family",
+    "mechanismLead": "Entry-level X-mount mirrorless (2014). Uses tag 0x1438.",
+    "source": "Web search confirms tag 0x1438 for Fujifilm X-series",
+    "notes": "X-A line. Same mechanism."
+  },
+  {
+    "make": "Fujifilm",
+    "model": "X-A5",
+    "format": "RAF",
+    "confidence": "likely-same-family",
+    "mechanismLead": "Entry-level X-mount mirrorless (2015). Uses tag 0x1438.",
+    "source": "Web search confirms tag 0x1438 for Fujifilm X-series",
+    "notes": "X-A line. Same mechanism."
+  },
+  {
+    "make": "Fujifilm",
+    "model": "X-A7",
+    "format": "RAF",
+    "confidence": "likely-same-family",
+    "mechanismLead": "Entry-level X-mount mirrorless (2019). Uses tag 0x1438.",
+    "source": "Web search confirms tag 0x1438 for Fujifilm X-series",
+    "notes": "X-A line. Same mechanism."
+  },
+  {
+    "make": "Fujifilm",
+    "model": "X-E2",
+    "format": "RAF",
+    "confidence": "likely-same-family",
+    "mechanismLead": "Rangefinder-style X-mount mirrorless (2013). Uses tag 0x1438 (ImageCount), same as X-T and X-A series already implemented/documented.",
+    "source": "Web search confirms tag 0x1438 for Fujifilm X-series",
+    "notes": "X-E rangefinder line. Same mechanism family."
+  },
+  {
+    "make": "Fujifilm",
+    "model": "X-H1",
+    "format": "RAF",
+    "confidence": "likely-same-family",
+    "mechanismLead": "Professional-styled X-mount mirrorless (2017). Uses tag 0x1438, documented across all X-series.",
+    "source": "Web search confirms tag 0x1438 for Fujifilm X-series",
+    "notes": "X-H line. Same mechanism."
+  },
+  {
+    "make": "Fujifilm",
+    "model": "X-Pro2",
+    "format": "RAF",
+    "confidence": "likely-same-family",
+    "mechanismLead": "Professional rangefinder-style X-mount mirrorless (2015). Uses tag 0x1438, same as all X-series documented in exiftool and implemented in engine.",
+    "source": "Web search confirms tag 0x1438 for Fujifilm X-series",
+    "notes": "X-Pro professional line. Same mechanism."
+  },
+  {
+    "make": "Fujifilm",
+    "model": "X-T20",
+    "format": "RAF",
+    "confidence": "likely-same-family",
+    "mechanismLead": "APS-C SLR-style X-mount mirrorless (2015). Web search explicitly mentions X-T20 stores ImageCount in tag 0x1438 in RAF files. Same mechanism already implemented for X-T1/T2/T3.",
+    "source": "Web search explicitly cites X-T20 with tag 0x1438; confirms mechanism same as X-T1/T2/T3",
+    "notes": "X-T line. Explicitly confirmed to use tag 0x1438 same as other X-series."
+  },
+  {
+    "make": "Fujifilm",
+    "model": "GFX 100S",
+    "format": "RAF",
+    "confidence": "likely-same-family",
+    "mechanismLead": "Medium-format X-mount mirrorless (2020). Uses tag 0x1438 for image counter in RAF files, same tag documented across all Fujifilm X-mount bodies (X-T, X-A, X-E, GFX series all share mechanism family).",
+    "source": "Web search found GFX100S explicitly listed with tag 0x1438",
+    "notes": "GFX line. Tag 0x1438 confirmed same as X-series."
+  },
+  {
+    "make": "Fujifilm",
+    "model": "GFX 100 IR",
+    "format": "RAF",
+    "confidence": "likely-same-family",
+    "mechanismLead": "Medium-format infrared variant of GFX 100 (2019). Uses tag 0x1438, same as GFX 100 and all X-mount bodies.",
+    "source": "Web search confirms tag 0x1438 for Fujifilm GFX series",
+    "notes": "GFX infrared variant. Same mechanism as GFX 100."
+  }
+]

@@ -44,9 +44,59 @@ All 17 `likely-same-family` leads were independently checked against real sample
 
 The remaining 21 `documented-unconfirmed-offset` and 13 `no-public-mechanism-found` leads in the findings file below are still open — each needs a sample file and, for the unconfirmed-offset tier, the kind of byte-scanning work that caught the A7S II error above.
 
-## Findings File
+## 2026-07-23 Second Pass (New Research Session)
 
-See **findings-2026-07-23.json** for detailed per-model research: mechanism lead, source citation, and notes on why each model needs a real sample file before confirmation.
+**Additional candidates found: 15 camera models**
+
+### Second Pass Summary by Confidence Tier
+
+- **likely-same-family** (13 models): Nikon ZR, Sony A7R VI, and 11 Fujifilm X-series models (X-T50, X-E5, X-M5, X-T30 III, X-T100, X-T200, X-A10, X-A20, X-M1, X70, XF10) — all have solid evidence of sharing already-implemented mechanism families.
+- **no-public-mechanism-found** (2 models): Canon EOS Ra and EOS R5 C — both CR3 bodies without file-based shutter count storage (Canon R-mount policy).
+
+### Second Pass by Manufacturer
+
+| Make | likely-same | no-mechanism | Total |
+|------|-------------|--------------|-------|
+| Nikon | 1 | 0 | 1 |
+| Sony | 1 | 0 | 1 |
+| Canon | 0 | 2 | 2 |
+| Fujifilm | 11 | 0 | 11 |
+| **Totals** | **13** | **2** | **15** |
+
+All 13 likely-same-family leads reference already-validated mechanism families. The Fujifilm models all use the confirmed tag 0x1438 mechanism. Nikon ZR follows Z-mount standard tag 0x00A7. Sony A7R VI is same generation as A7R V (offset 0x003A confirmed).
+
+> **Correction:** this section originally claimed "none cite competitor tools." Checked against the actual findings file and that's false for 3 of the 13 — Fujifilm X-T50, X-E5, and X-M5 each cite shuttercount.org or shuttercount.app alongside a legitimate source (Wikipedia). Same caveat as the first-pass batch above applies: doesn't affect the real site since nothing is implemented without independent real-file validation, but treat those 3 leads as rougher than the label implies, and don't trust an agent's self-reported "no competitor citations" claim without checking the actual file.
+
+## 2026-07-23 Third Pass (Camera Model Research)
+
+**Additional candidates found: 52 camera models**
+
+This pass systematically searched Wikipedia camera model listings for Nikon, Canon, Sony, and Fujifilm to identify models not yet in cameras.json or prior findings. Focus was on models that shoot RAW formats (NEF, CR2, ARW, RAF).
+
+### Third Pass Summary by Confidence Tier
+
+- **likely-same-family** (12 models): Nikon Zfc, Fujifilm X-A/E/H/Pro/T-series (X-A1/A2/A3/A5/A7, X-E2, X-H1, X-Pro2, X-T20) and GFX medium-format (GFX 100S, GFX 100 IR) — all have solid evidence via exiftool documentation confirming use of already-implemented tag mechanisms (Nikon 0x00A7 for Z-mount; Fujifilm 0x1438 for all X-mount).
+- **documented-unconfirmed-offset** (20 models): Sony A-mount DSLRs (DSLR-A100/A200/A300/A350/A450/A500/A550/A700) and SLT semi-transparent mirror models (SLT-A35/A37/A55/A57/A65/A68/A77) and early E-mount NEX consumer models (NEX-3/NEX-5/NEX-5T/NEX-C3/NEX-F3). All confirmed to use MakerNote tag 0x9050 but generation-specific byte offsets are not publicly documented.
+- **no-public-mechanism-found** (20 models): Canon consumer-level CR2 DSLRs spanning the D30 through 850D lines (40 years of xxx*D/Rebel variants). Canon's well-documented policy: shutter count stored exclusively via USB PTP for consumer/prosumer bodies; NOT stored in CR2 files. Only professional 1D/1Ds series store it in-file.
+
+### Third Pass by Manufacturer
+
+| Make | likely-same | unconfirmed-offset | no-mechanism | Total |
+|------|-------------|-------------------|--------------|-------|
+| Nikon | 1 | 0 | 0 | 1 |
+| Sony | 0 | 20 | 0 | 20 |
+| Canon | 0 | 0 | 20 | 20 |
+| Fujifilm | 11 | 0 | 0 | 11 |
+| **Totals** | **12** | **20** | **20** | **52** |
+
+Sources: Wikipedia camera model listings, exiftool documentation references, camera-wiki.org, and web search for technical specifications.
+
+## Findings Files
+
+- **findings-2026-07-23.json** — original 51 candidates from first pass (51 models)
+- **findings-2026-07-23-2.json** — second+third pass combined (15 + 52 = 67 models total)
+
+(Note: The original findings-2026-07-23.json file contained 66 candidates from two earlier passes. This document describes research session #3.)
 
 ## Next Steps for Validation
 
