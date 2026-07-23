@@ -29,9 +29,15 @@ import {
  * against two EOS R8 files and two EOS R50 files — five files, three models, all landing on
  * the same offset, which is strong enough to call that whole group confirmed.
  *
- * EOS R3/R7/R10 are deliberately NOT implemented: exiftool itself has no ShutterCount
- * definition for these bodies at all (checked directly), so there's no public ground truth
- * to validate against — this is a genuine gap in public documentation, not just our tool.
+ * A third-generation index (2157, i.e. 0x086D) was found the same way on two independent EOS
+ * R6 Mark III files with different counts.
+ *
+ * EOS R3/R7/R10/R5 Mark II/R50 V are deliberately NOT implemented: exiftool itself has no
+ * ShutterCount definition for these bodies at all (checked directly against our own sample
+ * files), so there's no public ground truth to validate against — this is a genuine gap in
+ * public documentation, not just our tool. (A competitor site claims offsets for R5 Mark II
+ * and R50 V; without our own ground truth to check them against, we're not copying numbers we
+ * can't verify.)
  */
 
 const TAG_SHUTTER_BLOCK = 0x000d;
@@ -45,6 +51,7 @@ interface IndexRule {
 const INDEX_RULES: IndexRule[] = [
   { matcher: /^Canon EOS R5$|^Canon EOS R6$/, byteIndex: 2801, confirmed: true },
   { matcher: /^Canon EOS R6m2$|^Canon EOS R6 Mark II$|^Canon EOS R8$|^Canon EOS R50$/, byteIndex: 3369, confirmed: true },
+  { matcher: /^Canon EOS R6 Mark III$/, byteIndex: 2157, confirmed: true },
 ];
 
 interface CanonResult {

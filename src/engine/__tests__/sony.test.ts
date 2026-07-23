@@ -39,6 +39,10 @@ const FIXTURES: Array<{ file: string; expectedCount: number; expectedModel: stri
   // (different counts) confirmed it shares the 0x003A offset with its siblings.
   { file: 'sony_a7m4.arw', expectedCount: 16903, expectedModel: 'ILCE-7M4' },
   { file: 'sony_a7m4_2.arw', expectedCount: 16907, expectedModel: 'ILCE-7M4' },
+  // Gap-fill against shuttercount.app's coverage — same 0x003A offset, confirmed on 3 more.
+  { file: 'sony_a7c.arw', expectedCount: 19, expectedModel: 'ILCE-7C' },
+  { file: 'sony_a7rm5.arw', expectedCount: 446, expectedModel: 'ILCE-7RM5' },
+  { file: 'sony_a7sm3.arw', expectedCount: 5460, expectedModel: 'ILCE-7SM3' },
 ];
 
 function toFile(path: string, name: string): File {

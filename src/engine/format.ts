@@ -5,7 +5,7 @@ import type { RawFormat } from './types';
  * (TIFF-based vs ISO-BMFF vs RAF's own magic) — it does NOT disambiguate brand/model,
  * which for TIFF-based files requires reading IFD0's Make/Model tags first.
  */
-export type ContainerKind = 'tiff' | 'isobmff' | 'raf' | 'unknown';
+export type ContainerKind = 'tiff' | 'isobmff' | 'raf' | 'jpeg' | 'unknown';
 
 export function detectContainer(view: DataView): ContainerKind {
   if (view.byteLength < 16) return 'unknown';
@@ -36,6 +36,11 @@ export function detectContainer(view: DataView): ContainerKind {
     }
   }
   if (matches) return 'raf';
+
+  // JPEG: SOI marker FF D8 FF
+  if (b0 === 0xff && b1 === 0xd8 && view.getUint8(2) === 0xff) {
+    return 'jpeg';
+  }
 
   return 'unknown';
 }

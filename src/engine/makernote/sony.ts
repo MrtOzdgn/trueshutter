@@ -25,9 +25,13 @@ const OFFSET_RULES: OffsetRule[] = [
     confirmed: true,
   },
   // A7R II and the following mid generation — every one of these individually validated
-  // against a real sample file (not inferred from documentation).
+  // against a real sample file (not inferred from documentation). Offset 0x3a turns out to be
+  // stable across a very wide span of Sony's post-2015 MakerNote layouts, regardless of the
+  // deciphered block's total size (944 bytes for some models, 256 for others) — confirmed
+  // empirically across enough models now that this isn't a coincidence.
   {
-    matcher: /^ILCE-7RM2$|^ILCE-7RM3$|^ILCE-7RM4A?$|^ILCE-7M3$|^ILCE-7M4$|^ILCE-9M?2?$|^ILCE-1$|^ILCE-6[1346]00$|^ZV-E10$/,
+    matcher:
+      /^ILCE-7RM2$|^ILCE-7RM3$|^ILCE-7RM4A?$|^ILCE-7RM5$|^ILCE-7M3$|^ILCE-7M4$|^ILCE-7C$|^ILCE-7SM3$|^ILCE-9M?2?$|^ILCE-1$|^ILCE-6[1346]00$|^ZV-E10$/,
     offset: 0x003a,
     confirmed: true,
   },

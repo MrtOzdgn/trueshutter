@@ -7,7 +7,7 @@ interface FileResult {
   result: ShutterCountResult;
 }
 
-const SUPPORTED_FORMATS = ['NEF', 'ARW', 'CR3', 'RAF'];
+const SUPPORTED_FORMATS = ['NEF', 'ARW', 'CR3', 'RAF', 'DNG', 'JPEG'];
 
 export default function ShutterChecker() {
   const [results, setResults] = useState<FileResult[]>([]);
@@ -55,7 +55,7 @@ export default function ShutterChecker() {
         onDragLeave={() => setIsDragging(false)}
         onDrop={onDrop}
       >
-        <input type="file" accept=".nef,.arw,.cr3,.raf" multiple onChange={onFileInput} hidden />
+        <input type="file" accept=".nef,.arw,.cr3,.raf,.dng,.jpg,.jpeg" multiple onChange={onFileInput} hidden />
         <div class="dropzone__icon">📷</div>
         <div class="dropzone__title">Drop RAW files here, or click to choose</div>
         <div class="badge badge--privacy">🔒 No upload — 100% local</div>

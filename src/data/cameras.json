@@ -1288,5 +1288,135 @@
     "mechanism": "Not present in file metadata",
     "ratedShutterLife": null,
     "notes": "Same as the X-Pro1 \u2014 predates the firmware that added this tag."
+  },
+  {
+    "id": "sony-a7c",
+    "make": "Sony",
+    "model": "A7C (ILCE-7C)",
+    "format": "ARW",
+    "status": "confirmed",
+    "mechanism": "MakerNote tag 0x9050, decrypted, offset 0x003A",
+    "ratedShutterLife": null,
+    "notes": null
+  },
+  {
+    "id": "sony-a7r-v",
+    "make": "Sony",
+    "model": "A7R V (ILCE-7RM5)",
+    "format": "ARW",
+    "status": "confirmed",
+    "mechanism": "MakerNote tag 0x9050, decrypted, offset 0x003A",
+    "ratedShutterLife": 500000,
+    "notes": null
+  },
+  {
+    "id": "sony-a7s-iii",
+    "make": "Sony",
+    "model": "A7S III (ILCE-7SM3)",
+    "format": "ARW",
+    "status": "confirmed",
+    "mechanism": "MakerNote tag 0x9050, decrypted, offset 0x003A",
+    "ratedShutterLife": null,
+    "notes": null
+  },
+  {
+    "id": "sony-a9-iii",
+    "make": "Sony",
+    "model": "A9 III (ILCE-9M3)",
+    "format": "ARW",
+    "status": "unsupported",
+    "mechanism": "Not yet implemented",
+    "ratedShutterLife": 500000,
+    "notes": "exiftool itself has no ShutterCount definition for this body yet, so there's no public ground truth to validate an offset against."
+  },
+  {
+    "id": "canon-eos-r6-mark-iii",
+    "make": "Canon",
+    "model": "EOS R6 Mark III",
+    "format": "CR3",
+    "status": "confirmed",
+    "mechanism": "CTMD metadata track, MakerNote tag 0x000D",
+    "ratedShutterLife": null,
+    "notes": null
+  },
+  {
+    "id": "canon-eos-r5-mark-ii",
+    "make": "Canon",
+    "model": "EOS R5 Mark II",
+    "format": "CR3",
+    "status": "unsupported",
+    "mechanism": "Not yet implemented",
+    "ratedShutterLife": 500000,
+    "notes": "exiftool has no ShutterCount definition for this body on our sample file, so there's no public ground truth to validate an offset against \u2014 we won't copy a competitor's unverified number."
+  },
+  {
+    "id": "canon-eos-r50-v",
+    "make": "Canon",
+    "model": "EOS R50 V",
+    "format": "CR3",
+    "status": "unsupported",
+    "mechanism": "Not yet implemented",
+    "ratedShutterLife": null,
+    "notes": "Same as the R5 Mark II \u2014 no ground truth available to validate against yet."
+  },
+  {
+    "id": "canon-eos-r1",
+    "make": "Canon",
+    "model": "EOS R1",
+    "format": "CR3",
+    "status": "unsupported",
+    "mechanism": "Not yet implemented",
+    "ratedShutterLife": null,
+    "notes": "No public sample file available yet to investigate this body at all."
+  },
+  {
+    "id": "canon-eos-1d-mark-ii",
+    "make": "Canon",
+    "model": "EOS-1D Mark II",
+    "format": "CR2",
+    "status": "confirmed",
+    "mechanism": "MakerNote tag 0x0093 (FileInfo)",
+    "ratedShutterLife": null,
+    "notes": "Unlike consumer/prosumer CR2 bodies, the professional 1D-series stores shutter count in-file."
+  },
+  {
+    "id": "canon-eos-1ds-mark-ii",
+    "make": "Canon",
+    "model": "EOS-1Ds Mark II",
+    "format": "CR2",
+    "status": "confirmed",
+    "mechanism": "MakerNote tag 0x0093 (FileInfo)",
+    "ratedShutterLife": null,
+    "notes": null
+  },
+  {
+    "id": "canon-eos-1d-mark-iii",
+    "make": "Canon",
+    "model": "EOS-1D Mark III",
+    "format": "CR2",
+    "status": "unsupported",
+    "mechanism": "Not yet implemented",
+    "ratedShutterLife": null,
+    "notes": "This generation uses a different FileInfo layout than the Mark II \u2014 the known offset doesn't apply, and we haven't found the right one yet."
+  },
+  {
+    "id": "canon-eos-1ds-mark-iii",
+    "make": "Canon",
+    "model": "EOS-1Ds Mark III",
+    "format": "CR2",
+    "status": "unsupported",
+    "mechanism": "Not yet implemented",
+    "ratedShutterLife": null,
+    "notes": "Same as the 1D Mark III \u2014 different FileInfo layout, not yet solved."
+  },
+  {
+    "id": "canon-eos-1d-mark-iv",
+    "make": "Canon",
+    "model": "EOS-1D Mark IV",
+    "format": "CR2",
+    "status": "unsupported",
+    "mechanism": "Not yet implemented",
+    "ratedShutterLife": null,
+    "notes": "exiftool has no ShutterCount definition for this body on our sample file."
   }
 ]

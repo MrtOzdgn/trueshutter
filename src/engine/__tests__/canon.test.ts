@@ -17,6 +17,10 @@ const FIXTURES: Array<{ file: string; expectedCount: number; expectedModel: stri
   { file: 'canon_r8_2.cr3', expectedCount: 65, expectedModel: 'Canon EOS R8' },
   { file: 'canon_r50_1.cr3', expectedCount: 43, expectedModel: 'Canon EOS R50' },
   { file: 'canon_r50_2.cr3', expectedCount: 20, expectedModel: 'Canon EOS R50' },
+  // Third-generation offset (2157 / 0x086D) — matches what a competitor documents, but found
+  // independently here and cross-checked on 2 files with different counts before trusting it.
+  { file: 'canon_r6m3_1.cr3', expectedCount: 4241, expectedModel: 'Canon EOS R6 Mark III' },
+  { file: 'canon_r6m3_2.cr3', expectedCount: 4242, expectedModel: 'Canon EOS R6 Mark III' },
 ];
 
 function toFile(path: string, name: string): File {
@@ -48,4 +52,28 @@ describe('readShutterCount - Canon CR3', () => {
       expect(result.shutterCount).toBe(259);
     }
   });
+});
+
+describe('readShutterCount - Canon CR2 (1D-series pro bodies)', () => {
+  // CR2 is a genuinely different, TIFF-based container (not CR3's ISOBMFF). Consumer/prosumer
+  // CR2 bodies don't store shutter count in-file at all; the professional 1D-series does, in a
+  // documented MakerNote tag (0x0093 "FileInfo"). Verified on 2 models with different counts.
+  const CR2_FIXTURES: Array<{ file: string; expectedCount: number; expectedModel: string }> = [
+    { file: 'canon_1d2.cr2', expectedCount: 14070, expectedModel: 'Canon EOS-1D Mark II' },
+    { file: 'canon_1ds2.cr2', expectedCount: 72, expectedModel: 'Canon EOS-1Ds Mark II' },
+  ];
+
+  for (const fixture of CR2_FIXTURES) {
+    it(`extracts the correct shutter count from ${fixture.file}`, async () => {
+      const file = toFile(`test-samples/${fixture.file}`, fixture.file);
+      const result = await readShutterCount(file);
+
+      expect(result.status).toBe('ok');
+      if (result.status === 'ok') {
+        expect(result.shutterCount).toBe(fixture.expectedCount);
+        expect(result.model.trim()).toBe(fixture.expectedModel);
+        expect(result.format).toBe('CR2');
+      }
+    });
+  }
 });
