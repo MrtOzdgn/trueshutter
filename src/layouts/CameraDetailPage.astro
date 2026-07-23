@@ -66,7 +66,7 @@ const description =
 				</p>
 			</header>
 
-			<section class="camera-detail">
+			<section class="camera-detail panel">
 				<p>{statusCopy[status]}</p>
 
 				{status !== 'unsupported' && (
@@ -96,47 +96,52 @@ const description =
 
 <style>
 	.breadcrumb {
-		color: var(--text-dim);
 		font-size: 0.85rem;
-	}
-	.breadcrumb a {
-		color: inherit;
+		opacity: 0.85;
+		margin: 0 0 0.5rem;
 	}
 	.status-badge {
 		display: inline-block;
-		font-weight: 600;
-		padding: 0.25rem 0.75rem;
+		font-weight: 800;
+		font-size: 0.8rem;
+		letter-spacing: 0.03em;
+		text-transform: uppercase;
+		padding: 0.35rem 0.9rem;
 		border-radius: 999px;
-		border: 1px solid var(--border);
+		border: 3px solid var(--ink);
 	}
 	.status-badge--confirmed {
-		color: var(--ok);
-		border-color: var(--ok);
+		background: var(--mint);
+		color: var(--ink);
 	}
 	.status-badge--expected {
+		background: var(--bg-elevated);
 		color: var(--text-dim);
 	}
 	.status-badge--unsupported {
-		color: var(--error);
-		border-color: var(--error);
+		background: var(--pink);
+		color: #fff;
 	}
 	.camera-detail {
 		display: flex;
 		flex-direction: column;
 		gap: 1rem;
-		background: var(--bg-elevated);
-		border: 1px solid var(--border);
-		border-radius: 12px;
-		padding: 1.5rem;
 	}
 	.cta {
 		display: inline-block;
-		color: var(--bg);
-		background: var(--accent);
-		font-weight: 700;
-		padding: 0.6rem 1.1rem;
-		border-radius: 8px;
+		color: #fff;
+		background: var(--blue);
+		font-weight: 800;
+		padding: 0.7rem 1.3rem;
+		border-radius: 10px;
+		border: 3px solid var(--ink);
+		box-shadow: 5px 5px 0 var(--ink);
 		text-decoration: none;
 		width: fit-content;
+		transition: transform 0.1s ease, box-shadow 0.1s ease;
+	}
+	.cta:hover {
+		transform: translate(-2px, -2px);
+		box-shadow: 7px 7px 0 var(--ink);
 	}
 </style>

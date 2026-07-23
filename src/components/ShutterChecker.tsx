@@ -62,7 +62,9 @@ export default function ShutterChecker({ locale = 'en' }: { locale?: Locale }) {
         onDrop={onDrop}
       >
         <input type="file" accept=".nef,.arw,.cr3,.cr2,.raf,.dng,.jpg,.jpeg" multiple onChange={onFileInput} hidden />
-        <div class="dropzone__icon">📷</div>
+        <div class="dropzone__icon" aria-hidden="true">
+          <div class="arrow" />
+        </div>
         <div class="dropzone__title">{t.dropzoneTitle}</div>
         <div class="badge badge--privacy">{t.privacyBadge}</div>
         <div class="dropzone__formats">

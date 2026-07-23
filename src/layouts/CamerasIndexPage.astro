@@ -45,24 +45,26 @@ const statusIcon = { confirmed: '✓', expected: '◐', unsupported: '✗' } as 
 				<p>{t.camerasLegend}</p>
 			</header>
 
-			{makes.map((make) => (
-				<section class="make-group">
-					<h2>{make}</h2>
-					<ul class="camera-list">
-						{byMake
-							.get(make)!
-							.sort((a, b) => a.data.model.localeCompare(b.data.model))
-							.map((camera) => (
-								<li>
-									<a href={`${base}${localePrefix}cameras/${camera.id}`}>
-										<span class={`status-icon status-icon--${camera.data.status}`}>{statusIcon[camera.data.status]}</span>
-										{camera.data.model}
-									</a>
-								</li>
-							))}
-					</ul>
-				</section>
-			))}
+			<div class="panel">
+				{makes.map((make) => (
+					<section class="make-group">
+						<h2>{make}</h2>
+						<ul class="camera-list">
+							{byMake
+								.get(make)!
+								.sort((a, b) => a.data.model.localeCompare(b.data.model))
+								.map((camera) => (
+									<li>
+										<a href={`${base}${localePrefix}cameras/${camera.id}`}>
+											<span class={`status-icon status-icon--${camera.data.status}`}>{statusIcon[camera.data.status]}</span>
+											{camera.data.model}
+										</a>
+									</li>
+								))}
+						</ul>
+					</section>
+				))}
+			</div>
 
 			<footer class="site-footer">
 				<p><a href={homeHref}>{t.backToTool}</a></p>
@@ -73,12 +75,21 @@ const statusIcon = { confirmed: '✓', expected: '◐', unsupported: '✗' } as 
 </html>
 
 <style>
+	.breadcrumb {
+		font-size: 0.85rem;
+		opacity: 0.85;
+		margin: 0 0 0.5rem;
+	}
 	.make-group {
 		margin-bottom: 2rem;
 	}
+	.make-group:last-child {
+		margin-bottom: 0;
+	}
 	.make-group h2 {
 		font-size: 1.1rem;
-		border-bottom: 1px solid var(--border);
+		font-weight: 900;
+		border-bottom: 3px solid var(--ink);
 		padding-bottom: 0.5rem;
 	}
 	.camera-list {
@@ -87,7 +98,7 @@ const statusIcon = { confirmed: '✓', expected: '◐', unsupported: '✗' } as 
 		padding: 0;
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-		gap: 0.5rem;
+		gap: 0.6rem;
 	}
 	.camera-list a {
 		display: flex;
@@ -95,12 +106,16 @@ const statusIcon = { confirmed: '✓', expected: '◐', unsupported: '✗' } as 
 		gap: 0.5rem;
 		color: var(--text);
 		text-decoration: none;
-		padding: 0.5rem 0.75rem;
-		border-radius: 8px;
-		border: 1px solid var(--border);
+		font-weight: 700;
+		padding: 0.55rem 0.85rem;
+		border-radius: 10px;
+		border: 3px solid var(--ink);
+		background: var(--bg-elevated);
+		transition: transform 0.1s ease, box-shadow 0.1s ease;
 	}
 	.camera-list a:hover {
-		border-color: var(--accent);
+		box-shadow: 4px 4px 0 var(--ink);
+		transform: translate(-2px, -2px);
 	}
 	.status-icon--confirmed {
 		color: var(--ok);
