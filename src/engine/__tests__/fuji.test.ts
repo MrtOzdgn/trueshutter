@@ -44,4 +44,27 @@ describe('readShutterCount - Fujifilm RAF', () => {
       }
     });
   }
+
+  it('resolves to an error result instead of an uncaught rejection when the embedded JPEG preview is truncated mid-marker', async () => {
+    // Same security-review finding as jpeg.test.ts's equivalent case — RAF hands off to the
+    // same shared jpegMarkers.ts walker for its embedded JPEG preview, so it had the identical
+    // uncaught-exception bug via a different entry point (readFromRaf, not readFromJpeg).
+    const magic = 'FUJIFILMCCD-RAW';
+    const bytes = new Uint8Array(104);
+    for (let i = 0; i < magic.length; i++) bytes[i] = magic.charCodeAt(i);
+    const dv = new DataView(bytes.buffer);
+    dv.setUint32(84, 88, false); // JPEG-offset field (big-endian uint32 at byte 84) points to byte 88
+    const embeddedJpeg = [
+      0xff, 0xd8, // SOI
+      0xff, 0xe0, 0x00, 0x04, 0x00, 0x00, // valid APP0, length 4
+      0xff, 0xe1, 0x00, 0x10, // APP1, length 16 (claims 14 more bytes than exist)
+      0x45, 0x78, 0x69, 0x66, // file ends here
+    ];
+    bytes.set(embeddedJpeg, 88);
+    const file = new File([bytes], 'truncated.raf');
+
+    const result = await readShutterCount(file);
+
+    expect(result.status).toBe('error');
+  });
 });

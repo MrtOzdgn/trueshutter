@@ -44,4 +44,24 @@ describe('readShutterCount - JPEG container', () => {
     const result = await readShutterCount(file);
     expect(result.status).toBe('unsupported');
   });
+
+  it('resolves to an error result instead of an uncaught rejection when truncated mid-marker', async () => {
+    // A security-review finding: a file truncated right after an APP1 marker's length field
+    // (before the "Exif\0\0" identifier bytes that follow it) caused an out-of-bounds DataView
+    // read inside jpegMarkers.ts that propagated as an unhandled promise rejection — which left
+    // ShutterChecker.tsx's processFiles loop stuck (isProcessing never reset, no result shown,
+    // any files after this one in the same drop batch silently never processed). Reproduced
+    // directly against the real engine before fixing, confirmed fixed after.
+    const bytes = new Uint8Array([
+      0xff, 0xd8, // SOI
+      0xff, 0xe0, 0x00, 0x04, 0x00, 0x00, // valid APP0, length 4
+      0xff, 0xe1, 0x00, 0x10, // APP1, length 16 (claims 14 more bytes than exist)
+      0x45, 0x78, 0x69, 0x66, // file ends here, 16 bytes total
+    ]);
+    const file = new File([bytes], 'truncated.jpg');
+
+    const result = await readShutterCount(file);
+
+    expect(result.status).toBe('error');
+  });
 });

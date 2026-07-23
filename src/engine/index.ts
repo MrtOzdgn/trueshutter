@@ -58,25 +58,33 @@ export async function readShutterCount(file: File): Promise<ShutterCountResult> 
 }
 
 function readFromRaf(view: DataView, format: RawFormat): ShutterCountResult {
-  if (!isRaf(view)) {
-    return { status: 'unsupported', make: null, model: null, format, reason: msg('unrecognizedRaf') };
+  try {
+    if (!isRaf(view)) {
+      return { status: 'unsupported', make: null, model: null, format, reason: msg('unrecognizedRaf') };
+    }
+    const tiffBase = findEmbeddedTiffBase(view);
+    if (tiffBase === null) {
+      return { status: 'unsupported', make: null, model: null, format, reason: msg('noExifInRaf') };
+    }
+    return readFromTiff(view, tiffBase, format);
+  } catch (err) {
+    return { status: 'error', message: (err as Error).message };
   }
-  const tiffBase = findEmbeddedTiffBase(view);
-  if (tiffBase === null) {
-    return { status: 'unsupported', make: null, model: null, format, reason: msg('noExifInRaf') };
-  }
-  return readFromTiff(view, tiffBase, format);
 }
 
 function readFromJpeg(view: DataView, format: RawFormat): ShutterCountResult {
-  if (!isJpeg(view)) {
-    return { status: 'unsupported', make: null, model: null, format, reason: msg('unrecognizedJpeg') };
+  try {
+    if (!isJpeg(view)) {
+      return { status: 'unsupported', make: null, model: null, format, reason: msg('unrecognizedJpeg') };
+    }
+    const tiffBase = findJpegTiffBase(view);
+    if (tiffBase === null) {
+      return { status: 'unsupported', make: null, model: null, format, reason: msg('noExifInJpeg') };
+    }
+    return readFromTiff(view, tiffBase, format);
+  } catch (err) {
+    return { status: 'error', message: (err as Error).message };
   }
-  const tiffBase = findJpegTiffBase(view);
-  if (tiffBase === null) {
-    return { status: 'unsupported', make: null, model: null, format, reason: msg('noExifInJpeg') };
-  }
-  return readFromTiff(view, tiffBase, format);
 }
 
 function readFromCanonCr3(view: DataView, format: RawFormat): ShutterCountResult {
