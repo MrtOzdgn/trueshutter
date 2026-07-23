@@ -17,8 +17,13 @@ interface OffsetRule {
 }
 
 const OFFSET_RULES: OffsetRule[] = [
-  // A7 / A7 II / A7S / A6000 generation
-  { matcher: /^ILCE-7(M2)?$|^ILCE-7S$|^ILCE-6000$/, offset: 0x0032, confirmed: true },
+  // A7 / A7 II / A7S / A6000 generation, plus the contemporary NEX/SLT/ILCA-77M2 bodies that
+  // share the same MakerNote layout — all individually validated against real sample files.
+  {
+    matcher: /^ILCE-7(M2)?$|^ILCE-7S$|^ILCE-6000$|^NEX-(7|6|5R|3N)$|^SLT-A(77V|58|99V)$|^ILCA-77M2$/,
+    offset: 0x0032,
+    confirmed: true,
+  },
   // A7R II and the following mid generation (A7R III/IV, A7 III, A9, A9 II/III, A1, A6100-A6700, ZV-E10)
   {
     matcher: /^ILCE-7RM2$|^ILCE-7RM3$|^ILCE-7RM4A?$|^ILCE-7M3$|^ILCE-9M?2?$|^ILCE-1$|^ILCE-6[1346]00$|^ZV-E10$/,
