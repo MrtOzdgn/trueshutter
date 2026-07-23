@@ -32,6 +32,18 @@ const FIXTURES: Array<{ file: string; expectedCount: number; expectedModel: stri
   { file: 'nikon_d7100.nef', expectedCount: 205, expectedModel: 'NIKON D7100' },
   { file: 'nikon_d750.nef', expectedCount: 478, expectedModel: 'NIKON D750' },
   { file: 'nikon_d800.nef', expectedCount: 8827, expectedModel: 'NIKON D800' },
+  // Full Z-series mirrorless lineup, validated against raw.pixls.us samples — 11/11 matched.
+  { file: 'nikon_z5.nef', expectedCount: 511, expectedModel: 'NIKON Z 5' },
+  { file: 'nikon_z6.nef', expectedCount: 739, expectedModel: 'NIKON Z 6' },
+  { file: 'nikon_z6_2.nef', expectedCount: 421, expectedModel: 'NIKON Z 6_2' },
+  { file: 'nikon_z7.nef', expectedCount: 890, expectedModel: 'NIKON Z 7' },
+  { file: 'nikon_z7_2.nef', expectedCount: 27, expectedModel: 'NIKON Z 7_2' },
+  { file: 'nikon_z8.nef', expectedCount: 2567, expectedModel: 'NIKON Z 8' },
+  { file: 'nikon_z9.nef', expectedCount: 18, expectedModel: 'NIKON Z 9' },
+  { file: 'nikon_z30.nef', expectedCount: 8, expectedModel: 'NIKON Z 30' },
+  { file: 'nikon_z50.nef', expectedCount: 442, expectedModel: 'NIKON Z 50' },
+  { file: 'nikon_zf.nef', expectedCount: 40, expectedModel: 'NIKON Z f' },
+  { file: 'nikon_zfc.nef', expectedCount: 16, expectedModel: 'NIKON Z fc' },
 ];
 
 function toFile(path: string, name: string): File {

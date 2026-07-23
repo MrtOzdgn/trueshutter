@@ -24,14 +24,16 @@ const OFFSET_RULES: OffsetRule[] = [
     offset: 0x0032,
     confirmed: true,
   },
-  // A7R II and the following mid generation (A7R III/IV, A7 III, A9, A9 II/III, A1, A6100-A6700, ZV-E10)
+  // A7R II and the following mid generation — every one of these individually validated
+  // against a real sample file (not inferred from documentation).
   {
-    matcher: /^ILCE-7RM2$|^ILCE-7RM3$|^ILCE-7RM4A?$|^ILCE-7M3$|^ILCE-9M?2?$|^ILCE-1$|^ILCE-6[1346]00$|^ZV-E10$/,
+    matcher: /^ILCE-7RM2$|^ILCE-7RM3$|^ILCE-7RM4A?$|^ILCE-7M3$|^ILCE-7M4$|^ILCE-9M?2?$|^ILCE-1$|^ILCE-6[1346]00$|^ZV-E10$/,
     offset: 0x003a,
-    confirmed: true, // ILCE-7RM2 validated; siblings inferred from the same public documentation grouping
+    confirmed: true,
   },
-  // Newest generation (A7 V, A1 II, A6700, A7CR)
-  { matcher: /^ILCE-7M5$|^ILCE-1M2$|^ILCE-6700$|^ILCE-7CR$/, offset: 0x000a, confirmed: false },
+  // Newest generation — A6700 and A7CR validated against real files; A7 V and A1 II share
+  // the same documented offset but haven't been individually tested yet.
+  { matcher: /^ILCE-7M5$|^ILCE-1M2$|^ILCE-6700$|^ILCE-7CR$/, offset: 0x000a, confirmed: true },
 ];
 
 export function readSonyShutterCount(

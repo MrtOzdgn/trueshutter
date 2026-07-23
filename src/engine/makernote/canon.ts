@@ -24,8 +24,14 @@ import {
  * fixed byte index inside opaque MakerNote tag 0x000D there.
  *
  * Index verified against exiftool on two independent EOS R6 files (different counts, both
- * matched) and one EOS R5 file. EOS R6 Mark II uses a different index, confirmed on only one
- * sample so far — flagged `confirmed: false` until cross-checked against a second file.
+ * matched) and one EOS R5 file (byte index 2801). A second-generation index (3369) was
+ * originally found on a single EOS R6 Mark II sample, then independently cross-checked
+ * against two EOS R8 files and two EOS R50 files — five files, three models, all landing on
+ * the same offset, which is strong enough to call that whole group confirmed.
+ *
+ * EOS R3/R7/R10 are deliberately NOT implemented: exiftool itself has no ShutterCount
+ * definition for these bodies at all (checked directly), so there's no public ground truth
+ * to validate against — this is a genuine gap in public documentation, not just our tool.
  */
 
 const TAG_SHUTTER_BLOCK = 0x000d;
@@ -38,7 +44,7 @@ interface IndexRule {
 
 const INDEX_RULES: IndexRule[] = [
   { matcher: /^Canon EOS R5$|^Canon EOS R6$/, byteIndex: 2801, confirmed: true },
-  { matcher: /^Canon EOS R6m2$|^Canon EOS R6 Mark II$/, byteIndex: 3369, confirmed: false },
+  { matcher: /^Canon EOS R6m2$|^Canon EOS R6 Mark II$|^Canon EOS R8$|^Canon EOS R50$/, byteIndex: 3369, confirmed: true },
 ];
 
 interface CanonResult {
