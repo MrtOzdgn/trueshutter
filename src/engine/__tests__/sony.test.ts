@@ -7,6 +7,7 @@ import { readShutterCount } from '../index';
 const FIXTURES: Array<{ file: string; expectedCount: number; expectedModel: string }> = [
   { file: 'sony_a7m2.arw', expectedCount: 998, expectedModel: 'ILCE-7M2' },
   { file: 'sony_a7r2.arw', expectedCount: 144, expectedModel: 'ILCE-7RM2' },
+  { file: 'sony_a6000.arw', expectedCount: 12494, expectedModel: 'ILCE-6000' },
 ];
 
 function toFile(path: string, name: string): File {

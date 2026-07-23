@@ -60,6 +60,7 @@
   { "id": "sony-a7r-ii", "make": "Sony", "model": "A7R II (ILCE-7RM2)", "format": "ARW", "status": "confirmed", "mechanism": "MakerNote tag 0x9050, decrypted, offset 0x003A", "ratedShutterLife": null, "notes": null },
   { "id": "sony-a7", "make": "Sony", "model": "A7 (ILCE-7)", "format": "ARW", "status": "expected", "mechanism": "MakerNote tag 0x9050, decrypted, offset 0x0032", "ratedShutterLife": null, "notes": null },
   { "id": "sony-a7s", "make": "Sony", "model": "A7S (ILCE-7S)", "format": "ARW", "status": "expected", "mechanism": "MakerNote tag 0x9050, decrypted, offset 0x0032", "ratedShutterLife": null, "notes": null },
+  { "id": "sony-a6000", "make": "Sony", "model": "A6000 (ILCE-6000)", "format": "ARW", "status": "confirmed", "mechanism": "MakerNote tag 0x9050, decrypted, offset 0x0032", "ratedShutterLife": null, "notes": null },
   { "id": "sony-a7r-iii", "make": "Sony", "model": "A7R III (ILCE-7RM3)", "format": "ARW", "status": "expected", "mechanism": "MakerNote tag 0x9050, decrypted, offset 0x003A", "ratedShutterLife": 500000, "notes": null },
   { "id": "sony-a7r-iv", "make": "Sony", "model": "A7R IV (ILCE-7RM4)", "format": "ARW", "status": "expected", "mechanism": "MakerNote tag 0x9050, decrypted, offset 0x003A", "ratedShutterLife": 500000, "notes": null },
   { "id": "sony-a7-iii", "make": "Sony", "model": "A7 III (ILCE-7M3)", "format": "ARW", "status": "expected", "mechanism": "MakerNote tag 0x9050, decrypted, offset 0x003A", "ratedShutterLife": 200000, "notes": null },
